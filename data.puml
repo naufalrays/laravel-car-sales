@@ -1,0 +1,80 @@
+@startuml
+
+' interface Item
+' interface Pass
+' Item <|-- Toy
+' Item <|-- Tool
+' Item <|-- Bread
+
+
+entity Customer {
+    * id_customer: INTEGER <<PK>>
+    - nama_customer: STRING
+    - no_tlp: INTEGER
+    - alamat: STRING[191]
+}
+
+entity Pemesanan {
+    * id_pemesanan: INTEGER <<PK>>
+    * id_customer: STRING <<FK>>
+    - alamat_pengiriman: STRING
+    - nama_penerima: STRING
+    - total_harga: STRING
+    - jml_pemesanan: INTEGER
+    - tgl_pemesanan: TIMESTAMP
+    - tgl_pengiriman: TIMESTAMP
+}
+
+entity DetailPemesanan {
+    * id_pemesanan
+}
+
+entity Unit {
+    * kd_unit: STRING
+    - nama_unit: STRING
+    - harga_unit: INTEGER
+    - jml_pemesanan: INTEGER
+
+}
+
+entity Pembayaran {
+    * id_pembayaran: INTEGER <<PK>>
+    - nama_unit: STRING
+    - nama_customer: STRING
+    - harga_unit: INTEGER
+    - jml_pemesanan: STRING
+    - sub_total: STRING
+    - no_pembayaran: STRING
+    - debit: INTEGER
+    - bool: INTEGER
+    - tgl_pembayaran: TIMESTAMP
+}
+
+entity Admin {
+    * id_admin: INTEGER <<PK>>
+    * id_pembayaran: INTEGER <<FK>>
+    - nama_admin: STRING
+    - password: STRING
+    - email_admin: STRING
+    - username: STRING
+    - no_tlp: INTEGER
+}
+
+entity Penjualan {
+    * id_penjualan: INTEGER <<PK>>
+    * nama_customer: STRING
+    - total_jual: INTEGER
+    - no_jual: INTEGER
+    - tgl_jual : TIMESTAMP
+}
+
+entity DetailPenjualan {
+    * id_detail: INTEGER
+    - nama_unit: STRING
+    - jml_pemesanan: INTEGER
+}
+
+Admin "1" --> "N" Pembayaran
+Customer "1" --> "N" Pemesanan
+
+@enduml
