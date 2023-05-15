@@ -33,14 +33,6 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        // Car::create([
-        //     'name' => $request->name,
-        //     'type' => $request->type,
-        //     'stock' => $request->stock,
-        //     'price' => $request->price,
-        //     'image' => $request->image,
-        // ]);
-
         $data = new Car();
         if ($request->file('image')) {
             $file = $request->file('image');
@@ -104,13 +96,11 @@ class CarController extends Controller
     public function destroy($id)
     {
         $data = Car::find($id);
-        //  Car::find($id);
         if (file_exists('images/cars/' . $data->image)) {
             @unlink('images/cars/' . $data->image);
         }
         $data->delete();
         FacadesAlert::success('Success', 'Successfully deleted data');
         return back();
-        // return redirect('/')->with('status', 'Data Deleted Successfully');
     }
 }
