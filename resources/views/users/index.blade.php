@@ -39,7 +39,7 @@
                             <td class="py-3 px-6 text-left whitespace-nowrap"> {{ $r->name }} </td>
                             @endforeach
                             <td class="py-3 px-6 text-left whitespace-nowrap">
-                                @auth
+
                                 <div class="flex item-center w-auto">
                                     <a href="{{ route('users.edit', $usersData->id) }}" class="text-gray-400 hover:text-gray-100  mr-2">
                                         <div class="bg-gray-200 p-2 rounded-lg mr-2 text-green-600 hover:text-black ">
@@ -60,11 +60,6 @@
                                         </button>
                                     </form>
                                 </div>
-                                @else
-                                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                    Buy</button>
-                                @endauth
-
                             </td>
                         </tr>
                         @endforeach

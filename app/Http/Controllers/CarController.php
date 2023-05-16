@@ -97,7 +97,9 @@ class CarController extends Controller
     {
         $data = Car::find($id);
         if (file_exists('images/cars/' . $data->image)) {
-            @unlink('images/cars/' . $data->image);
+            if (!in_array($data->image, ['Baleno.jpeg', 'XL7.jpeg', 'Ertiga.jpeg', 'Ignis.jpeg', 'S-Presso.jpeg'])) {
+                @unlink('images/cars/' . $data->image);
+            }
         }
         $data->delete();
         FacadesAlert::success('Success', 'Successfully deleted data');
