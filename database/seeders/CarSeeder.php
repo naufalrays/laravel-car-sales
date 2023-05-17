@@ -18,35 +18,35 @@ class CarSeeder extends Seeder
             'type' => 'S-Presso',
             'stock' => '8',
             'price' => '160000000',
-            'image' => 'S-Presso.jpeg'
+            'image' => 'S-Presso.png'
         ]);
         Car::create([
             'name' => 'Suzuki',
             'type' => 'Baleno',
             'stock' => '4',
             'price' => '230000000',
-            'image' => 'Baleno.jpeg'
+            'image' => 'Baleno.png'
         ]);
         Car::create([
             'name' => 'Suzuki',
             'type' => 'Ignis',
             'stock' => '2',
             'price' => '209000000',
-            'image' => 'Ignis.jpeg'
+            'image' => 'Ignis.png'
         ]);
         Car::create([
             'name' => 'Suzuki',
             'type' => 'XL7',
             'stock' => '2',
             'price' => '290000000',
-            'image' => 'XL7.jpeg'
+            'image' => 'XL7.png'
         ]);
         Car::create([
             'name' => 'Suzuki',
             'type' => 'Ertiga',
             'stock' => '12',
             'price' => '260000000',
-            'image' => 'Ertiga.jpeg'
+            'image' => 'Ertiga.png'
         ]);
     }
 }

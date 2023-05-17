@@ -10,9 +10,11 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @auth
+            @role('admin')
             <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onclick="location.href='{{ route('cars.create') }}'" type="button">
                 <p class="text-lg leading-none text-white">Create a new car</p>
             </button>
+            @endrole
             @endauth
 
             <div class="mt-5 overflow-auto rounded-lg shadow">
@@ -36,10 +38,11 @@
                             <td class="py-3 px-6 text-left whitespace-nowrap">{{ $carData->name }}</td>
                             <td class="py-3 px-6 text-left whitespace-nowrap">{{ $carData->type }}</td>
                             <td class="py-3 px-6 text-left whitespace-nowrap">{{ $carData->stock }}</td>
-                            <td class="py-3 px-6 text-left whitespace-nowrap">Rp.{{ $carData->price }}</td>
+                            <td class="py-3 px-6 text-left whitespace-nowrap">Rp.{{ number_format($carData->price, 0, ',', '.')  }}</td>
                             <td class="py-3 px-6 text-left whitespace-nowrap"><img src="{{ url('images/cars/'.$carData->image) }}" class="max-h-32 w-48 mb-2 object-cover"></td>
                             <td class="py-3 px-6 text-left whitespace-nowrap">
                                 @auth
+                                @role('admin')
                                 <div class="flex item-center w-auto">
                                     <a href="{{ route('cars.edit', $carData->id) }}" class="text-gray-400 hover:text-gray-100  mr-2">
                                         <div class="bg-gray-200 p-2 rounded-lg mr-2 text-green-600 hover:text-black ">
@@ -61,14 +64,39 @@
                                     </form>
                                 </div>
                                 @else
-                                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                    Buy</button>
-                                @endauth
-
+                                {{-- Jika stock mobil kosong maka  --}}
+                                @if($carData->stock <= 0) <button type="button" onclick="" class="text-white bg-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-400  dark:focus:ring-blue-800 cursor-not-allowed" disabled>
+                                    Sold Out
+                                    </button>
+                                    {{-- Jika stock mobil tersedia --}}
+                                    @else
+                                    <button type="button" onclick="location.href='{{ route('order.show', $carData->id) }}'" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        <svg aria-hidden="true" class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
+                                        </svg>
+                                        Order Now
+                                    </button>
+                                    @endif
+                                    @endrole
+                                    @else
+                                    {{-- Jika stock mobil kosong maka  --}}
+                                    @if($carData->stock == 0)
+                                    <button type="button" onclick="" class="text-white bg-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-400  dark:focus:ring-blue-800 cursor-not-allowed" disabled>
+                                        Sold Out
+                                    </button>
+                                    {{-- Jika stock mobil tersedia --}}
+                                    @else
+                                    <button type="button" onclick="location.href='{{ route('order.show', $carData->id) }}'" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        <svg aria-hidden="true" class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
+                                        </svg>
+                                        Order Now
+                                    </button>
+                                    @endif
+                                    @endauth
                             </td>
                         </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>

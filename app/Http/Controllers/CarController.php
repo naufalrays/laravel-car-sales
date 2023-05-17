@@ -97,7 +97,7 @@ class CarController extends Controller
     {
         $data = Car::find($id);
         if (file_exists('images/cars/' . $data->image)) {
-            if (!in_array($data->image, ['Baleno.jpeg', 'XL7.jpeg', 'Ertiga.jpeg', 'Ignis.jpeg', 'S-Presso.jpeg'])) {
+            if (!in_array($data->image, ['Baleno.png', 'XL7.png', 'Ertiga.png', 'Ignis.png', 'S-Presso.png'])) {
                 @unlink('images/cars/' . $data->image);
             }
         }
