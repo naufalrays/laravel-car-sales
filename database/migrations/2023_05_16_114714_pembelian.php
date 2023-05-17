@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('pembelian', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('user_id');
-            $table->foreignId('car_id');
-            $table->string('recipient_name');
-            $table->string('recipient_phone_number');
-            $table->string('recipient_address');
-            $table->integer('quantity');
-            $table->bigInteger('total_price');
+            $table->foreignId('id_akun');
+            $table->foreignId('id_mobil');
+            $table->string('nama_penerima');
+            $table->string('nomor_penerima');
+            $table->string('alamat_penerima');
+            $table->integer('jumlah');
+            $table->bigInteger('harga_total');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('pembelian');
     }
 };

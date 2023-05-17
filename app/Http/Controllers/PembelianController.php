@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
+use App\Models\Pembelian;
 use Illuminate\Http\Request;
 use App\Models\Car;
 use RealRashid\SweetAlert\Facades\Alert as FacadesAlert;
 
 
-class OrderController extends Controller
+class PembelianController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $ordersData = Order::all();
+        $ordersData = Pembelian::all();
         return view('order.index', ['ordersData' => $ordersData]);
     }
 
@@ -38,7 +38,7 @@ class OrderController extends Controller
         $carData = Car::find($carId);
         // dd($carData->stock);
 
-        $order = Order::create([
+        $order = Pembelian::create([
             'user_id' => $request->userID,
             'car_id' => $carId,
             'recipient_name' => $request->recipient_name,
@@ -66,7 +66,7 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Order $order)
+    public function edit(Pembelian $order)
     {
         //
     }
@@ -74,7 +74,7 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, Pembelian $order)
     {
         //
     }
@@ -84,7 +84,7 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        $data = Order::find($id);
+        $data = Pembelian::find($id);
         $carData = Car::find($data->car->id);
         $carData->update([
             'stock' => $carData->stock + $data->quantity,

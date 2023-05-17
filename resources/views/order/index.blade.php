@@ -3,7 +3,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Orders') }}
+            {{ __('Pembelian') }}
         </h2>
     </x-slot>
 
@@ -22,16 +22,16 @@
                 <table class="w-full">
                     <thead class="border-b-2 border-gray-100 dark:border-gray-900">
                         <tr class="bg-gray-200 dark:bg-gray-800 dark:text-white">
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Car</th>
+                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Merek</th>
                             @role('admin')
                             <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">User</th>
                             @endrole
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Recipient Name</th>
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Recipient Phone Number</th>
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Recipient Address</th>
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Quantity</th>
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Total Price</th>
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Actions</th>
+                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Penerima</th>
+                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Nomor Penerima</th>
+                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Alamat Penerima</th>
+                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Jumlah</th>
+                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Harga Total</th>
+                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
@@ -52,7 +52,7 @@
                             <td class="py-3 px-6 text-left whitespace-nowrap">
                                 <div class="flex item-center w-auto">
                                     @role('user')
-                                    <a href="#" class="hover:text-gray-100  mr-2">
+                                    <a href="{{ route('payments.create') }}" class="hover:text-gray-100  mr-2">
                                         <div class="bg-blue-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
                                             Pay now
                                         </div>

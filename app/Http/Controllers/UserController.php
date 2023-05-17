@@ -36,7 +36,6 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', 'unique:' . User::class],
             'password' => ['required',  Rules\Password::defaults()],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'phone_number' => ['numeric', 'unique:' . User::class],
@@ -44,7 +43,6 @@ class UserController extends Controller
         ]);
         $user = User::create([
             'name' => $request->name,
-            'username' => $request->username,
             'phone_number' => $request->phone_number,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -80,7 +78,6 @@ class UserController extends Controller
         $data->update(
             [
                 'name' => $request->name,
-                'username' => $request->username,
                 'password' => $request->password ?? $data->password,
                 'email' => $request->email,
                 'phone_number' => $request->phone_number,

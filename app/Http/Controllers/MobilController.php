@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Car;
+use App\Models\Mobil;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Facade;
 use RealRashid\SweetAlert\Facades\Alert as FacadesAlert;
 use Alert;
 // use RealRashid\SweetAlert\Facades\Alert as FacadesAlert;
 
-class CarController extends Controller
+class MobilController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = Car::orderBy('id')->get();
-        return view('cars.index', ['data' => $data]);
+        $dataMobil = Mobil::orderBy('id')->get();
+        return view('mobil.index', ['dataMobil' => $dataMobil]);
     }
 
     /**
@@ -25,7 +25,7 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view('cars.create');
+        return view('mobil.create');
     }
 
     /**
@@ -33,27 +33,27 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        $data = new Car();
+        $data = new Mobil();
         if ($request->file('image')) {
             $file = $request->file('image');
             $filename = date('YmdHi') . $file->getClientOriginalName();
 
             $file->move(public_path('images/cars'), $filename);
-            $data['image'] = $filename;
-            $data['name'] = $request->name;
-            $data['type'] = $request->type;
-            $data['stock'] = $request->stock;
-            $data['price'] = $request->price;
+            $data['gambar'] = $filename;
+            $data['merek'] = $request->name;
+            $data['tipe'] = $request->type;
+            $data['stok'] = $request->stock;
+            $data['harga'] = $request->price;
         }
         $data->save();
         FacadesAlert::success('Success', 'Successfully added data');
-        return redirect('cars');
+        return redirect('mobil');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Car $car)
+    public function show(Mobil $car)
     {
         //
     }
@@ -63,8 +63,8 @@ class CarController extends Controller
      */
     public function edit($id)
     {
-        $data = Car::find($id);
-        return view('cars.update', ['data' => $data]);
+        $dataMobil = Mobil::find($id);
+        return view('mobil.update', ['dataMobil' => $dataMobil]);
     }
 
     /**
@@ -73,21 +73,21 @@ class CarController extends Controller
     public function update(Request $request, $id)
     {
 
-        $data = Car::find($id);
+        $data = Mobil::find($id);
         $data->update(
             [
-                'name' => $request->name,
-                'type' => $request->type,
-                'stock' => $request->stock,
-                'price' => $request->price
+                'merek' => $request->name,
+                'tipe' => $request->type,
+                'stok' => $request->stock,
+                'harga' => $request->price
             ],
         ); // After
         if ($request->file('image')) {
             $file = $request->file('image');
             clearstatcache();
-            $file->move(public_path('images/cars'), $data->image);
+            $file->move(public_path('images/cars'), $data->gambar);
         }
-        return redirect('/cars');
+        return redirect('/mobil');
     }
 
     /**
@@ -95,14 +95,15 @@ class CarController extends Controller
      */
     public function destroy($id)
     {
-        $data = Car::find($id);
-        if (file_exists('images/cars/' . $data->image)) {
-            if (!in_array($data->image, ['Baleno.png', 'XL7.png', 'Ertiga.png', 'Ignis.png', 'S-Presso.png'])) {
-                @unlink('images/cars/' . $data->image);
+        $data = Mobil::find($id);
+        // dd($data->gambar);
+        if (file_exists('images/cars/' . $data->gambar)) {
+            if (!in_array($data->gambar, ['Baleno.png', 'XL7.png', 'Ertiga.png', 'Ignis.png', 'S-Presso.png'])) {
+                @unlink('images/cars/' . $data->gambar);
             }
         }
         $data->delete();
-        FacadesAlert::success('Success', 'Successfully deleted data');
+        FacadesAlert::success('Sukses', 'Berhasil Menghapus Data');
         return back();
     }
 }

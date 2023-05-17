@@ -3,14 +3,14 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Users') }}
+            {{ __('Daftar Akun') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onclick="location.href='{{ route('users.create') }}'" type="button">
-                <p class="text-lg leading-none text-white">Create a new user</p>
+                <p class="text-lg leading-none text-white">Buat akun baru</p>
             </button>
 
             <div class="mt-5 overflow-auto rounded-lg shadow">
@@ -19,12 +19,11 @@
                     <thead class="border-b-2 border-gray-100 dark:border-gray-900">
                         <tr class="bg-gray-200 dark:bg-gray-800 dark:text-white">
                             <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">No.</th>
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Name</th>
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Username</th>
+                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Nama</th>
                             <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Email</th>
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Phone Number</th>
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Role</th>
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Actions</th>
+                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Nomor Telepon</th>
+                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Peran</th>
+                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
@@ -32,7 +31,6 @@
                         <tr class="odd:bg-white even:bg-slate-50 dark:even:bg-gray-800 dark:odd:bg-gray-700 dark:text-white">
                             <td class="py-3 px-6 text-left whitespace-nowrap"> {{ $index+1 }} </td>
                             <td class="py-3 px-6 text-left whitespace-nowrap"> {{ $usersData->name }} </td>
-                            <td class="py-3 px-6 text-left whitespace-nowrap"> {{ $usersData->username }} </td>
                             <td class="py-3 px-6 text-left whitespace-nowrap"> {{ $usersData->email }} </td>
                             <td class="py-3 px-6 text-left whitespace-nowrap"> {{ $usersData->phone_number ?? '-'}} </td>
                             @foreach ($usersData->roles as $r )

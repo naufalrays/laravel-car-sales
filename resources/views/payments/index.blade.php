@@ -3,7 +3,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Pembelian') }}
+            {{ __('Order') }}
         </h2>
     </x-slot>
     {{-- {{ $carData }} --}}
@@ -37,33 +37,33 @@
                             <form action="/order" method="post">
                                 @csrf
                                 <div class="mb-6">
-                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ __("Informasi Konsumen") }}
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ __("Contact Information") }}
                                     </label>
                                     <span> {{ Auth::user()->name  }}</span>
                                     <span>({{ Auth::user()->email  }})</span>
                                 </div>
 
                                 <div class="mb-6">
-                                    <label for="recipient_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ __("Nama Penerima") }}
+                                    <label for="recipient_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ __("Recipient's Name") }}
                                     </label>
-                                    <input type="text" name="recipient_name" id="recipient_name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Nama Penerima" value="{{ Auth::user()->name  }}" required>
+                                    <input type="text" name="recipient_name" id="recipient_name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Rayhan" value="{{ Auth::user()->name  }}" required>
                                 </div>
                                 <div class="mb-6">
-                                    <label for="recipient_phone_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ __("Nomor Penerima") }}
+                                    <label for="recipient_phone_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ __("Phone Number") }}
                                     </label>
-                                    <input type="number" name="recipient_phone_number" id="recipient_phone_number" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Nomor Telepon" value="{{ Auth::user()->phone_number  }}" required>
+                                    <input type="number" name="recipient_phone_number" id="recipient_phone_number" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Your phone number" value="{{ Auth::user()->phone_number  }}" required>
                                 </div>
                                 <div class="mb-6">
-                                    <label for="recipient_address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ __("Alamat Penerima") }}
+                                    <label for="recipient_address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ __("Recipient's Address") }}
                                     </label>
-                                    <input type="text" name="recipient_address" id="recipient_address" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Alamat Penerima" required>
+                                    <input type="text" name="recipient_address" id="recipient_address" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Jl. Jalan Terus" required>
                                 </div>
                                 <div class="mb-6">
-                                    <label for="qty" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ __("Jumlah beli") }}
+                                    <label for="qty" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ __("Quantity") }}
                                     </label>
                                     <input type="number" oninput="priceTotal({{ $carData->price }});" name="qty" id="qty" min="1" max="{{ $carData->stock }}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="5" value="1" required>
                                 </div>
-                                <label class="font-bold" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ __("Harga Total") }}
+                                <label class="font-bold" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ __("Total") }}
                                 </label>
                                 <div class="flex mb-6 font-bold">
                                     <h2 class="text-2xl me-1">Rp.</h2>
@@ -75,7 +75,7 @@
                                     <svg aria-hidden="true" class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
                                     </svg>
-                                    Beli Sekarang
+                                    Order Now
                                 </button>
                             </form>
                         </div>
