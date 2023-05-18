@@ -19,7 +19,6 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::resource('pembelian', PembelianController::class);
     Route::post('pembelian/{id}/konfirmasi', [PembelianController::class, 'informasi']);
-    // Route::post('pembelian', [PembelianController::class, 'simpan']);
     Route::resource('users', UserController::class);
     Route::resource('payments', PaymentController::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

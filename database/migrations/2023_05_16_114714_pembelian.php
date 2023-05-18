@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('alamat_penerima');
             $table->integer('jumlah');
             $table->bigInteger('harga_total');
+            $table->string('status')->default('Menunggu Pembayaran');
+            $table->string('gambar')->nullable();
             $table->timestamps();
         });
     }

@@ -6,6 +6,7 @@ use App\Models\Pembelian;
 use Illuminate\Http\Request;
 use App\Models\Car;
 use App\Models\Mobil;
+use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert as FacadesAlert;
 
 
@@ -48,9 +49,9 @@ class PembelianController extends Controller
             'jumlah' => $request->jumlah,
             'harga_total' => $request->harga_total,
         ]);
-        $dataMobil->update([
-            'stok' => $dataMobil->stok - $request->qty,
-        ]);
+        // $dataMobil->update([
+        //     'stok' => $dataMobil->stok - $request->qty,
+        // ]);
         FacadesAlert::success('Berhasil', 'Berhasil Melakukan Pembelian'); //Sweet Alert
         return redirect('/pembelian');
     }
@@ -67,17 +68,35 @@ class PembelianController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pembelian $order)
+    public function edit($id)
     {
-        //
+        $dataPembelian = Pembelian::find($id);
+        return view('pembelian.update', ['dataPembelian' => $dataPembelian]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pembelian $order)
+    public function update(Request $request,  $id)
     {
-        //
+        $data = Pembelian::find($id);
+        $user = User::find($data->user_id);
+        $mobil = Mobil::find($data->mobil_id);
+        // $request->validate([]);
+        // dd($mobil->tipe);
+        if ($request->file('image')) {
+            $file = $request->file('image');
+            $extension = $file->extension();
+            $filename = date('YmdHi') . '-' . $data->id . '-' . $user->name . '-' . $mobil->tipe . '.' . $extension;
+            $file->move(public_path('images/buktiPembayaran'), $filename);
+            $data['gambar'] = $filename;
+            $data['nama_penerima'] = $request->name;
+            $data['nomor_penerima'] = $request->number;
+            $data['alamat_penerima'] = $request->address;
+            $data['status'] = 'Menunggu Konfirmasi';
+        }
+        $data->save();
+        return redirect('pembelian');
     }
 
     /**
@@ -86,12 +105,15 @@ class PembelianController extends Controller
     public function destroy($id)
     {
         $data = Pembelian::find($id);
-        $carData = Pembelian::find($data->car->id);
-        $carData->update([
-            'stock' => $carData->stock + $data->quantity,
-        ]);
-        $data->delete();
-        FacadesAlert::success('Success', 'Successfully deleted data'); //Sweet Alert
+        // $carData = Pembelian::find($data->car->id);
+        // $carData->update([
+        //     'stock' => $carData->stock + $data->quantity,
+        // ]);
+        if ($data->status !== "Berhasil") {
+            $data->delete();
+            FacadesAlert::success('Berhasil', 'Berhasil menghapus data'); //Sweet Alert
+        }
+        // if($data->)
         return back();
     }
 
@@ -110,8 +132,5 @@ class PembelianController extends Controller
             'jumlah' => $request->qty,
             'harga_total' => $totalPrice,
         ]);
-    }
-    public function confirm($id)
-    {
     }
 }

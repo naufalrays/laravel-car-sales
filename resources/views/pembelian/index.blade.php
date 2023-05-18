@@ -49,16 +49,32 @@
                             <td class="py-3 px-6 text-left whitespace-nowrap">{{ $data->nomor_penerima }}</td>
                             <td style="width: 200px" class="py-3 px-6 inline-block">{{ $data->alamat_penerima }}</td>
                             <td class="py-3 px-6 text-left whitespace-nowrap">{{ $data->jumlah }}</td>
-                            <td style="max-width: 150px;" class="py-3 px-6 text-left inline-block ">Menunggu Konfirmasi</td>
-                            <td class="py-3 px-6 text-left whitespace-nowrap">{{ number_format($data->harga_total, 0, ',', '.') }}</td>
+                            <td style="max-width: 150px;" class="py-3 px-6 text-left inline-block ">{{ $data->status }}</td>
+                            <td class="py-3 px-6 text-left whitespace-nowrap">Rp. {{ number_format($data->harga_total, 0, ',', '.') }}</td>
                             <td class="py-3 px-6 text-left whitespace-nowrap">
                                 <div class="flex item-center w-auto">
                                     @role('user')
-                                    <a href="{{ route('payments.create') }}" class="hover:text-gray-100  mr-2">
+                                    @if($data->status == 'Menunggu Pembayaran')
+                                    <a href="{{ route('pembelian.edit', $data->id) }}" class="hover:text-gray-100  mr-2">
                                         <div class="bg-blue-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
-                                            Pay now
+                                            Upload Bukti Pembayaran
                                         </div>
                                     </a>
+                                    @elseif($data->status == 'Menunggu Konfirmasi')
+                                    <a href="{{ route('pembelian.edit', $data->id) }}" class="hover:text-gray-100  mr-2">
+                                        <div class="bg-blue-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
+                                            Ubah Data
+                                        </div>
+                                    </a>
+                                    @elseif($data->status == "Dibeli")
+                                    <a href="{{ route('pembelian.edit', $data->id) }}" class="hover:text-gray-100  mr-2">
+                                        <div class="bg-green-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
+                                            Invoice Pembelian
+                                        </div>
+                                    </a>
+                                    @elseif($data->status == "Gagal")
+                                    @endif
+
                                     @endrole
                                     {{-- Button trash --}}
                                     <form action="{{ route('pembelian.destroy', $data->id) }}" data-confirm="true" onclick="return confirm('Yakin ingin menghapus data?')" method="post">

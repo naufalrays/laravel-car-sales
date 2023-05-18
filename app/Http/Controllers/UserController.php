@@ -39,7 +39,7 @@ class UserController extends Controller
             'password' => ['required',  Rules\Password::defaults()],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'phone_number' => ['numeric', 'unique:' . User::class],
-            'roles' => ['required', 'in:admin,user'],
+            'roles' => ['required', 'in:sales,user'],
         ]);
         $user = User::create([
             'name' => $request->name,
