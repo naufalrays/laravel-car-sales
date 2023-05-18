@@ -18,7 +18,6 @@
             @endauth
 
             <div class="mt-5 overflow-auto rounded-lg shadow">
-
                 <table class="w-full">
                     <thead class="border-b-2 border-gray-100 dark:border-gray-900">
                         <tr class="bg-gray-200 dark:bg-gray-800 dark:text-white">
@@ -53,6 +52,7 @@
                             <td class="py-3 px-6 text-left whitespace-nowrap">Rp. {{ number_format($data->harga_total, 0, ',', '.') }}</td>
                             <td class="py-3 px-6 text-left whitespace-nowrap">
                                 <div class="flex item-center w-auto">
+                                    {{-- Button Untuk Upload Bukti Pembayaran, Invoice, dll --}}
                                     @role('user')
                                     @if($data->status == 'Menunggu Pembayaran')
                                     <a href="{{ route('pembelian.edit', $data->id) }}" class="hover:text-gray-100  mr-2">
@@ -74,7 +74,24 @@
                                     </a>
                                     @elseif($data->status == "Gagal")
                                     @endif
-
+                                    @endrole
+                                    {{-- Button Untuk Konfirmasi Pembayaran, Invoice, dll --}}
+                                    @role('sales')
+                                    @if($data->status == 'Menunggu Pembayaran')
+                                    @elseif($data->status == 'Menunggu Konfirmasi')
+                                    <a href="{{ route('pembelian.konfirmasiPembayaran', $data->id) }}" class="hover:text-gray-100  mr-2">
+                                        <div class="bg-blue-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
+                                            Konfirmasi Pembayaran
+                                        </div>
+                                    </a>
+                                    @elseif($data->status == "Dibeli")
+                                    <a href="{{ route('pembelian.edit', $data->id) }}" class="hover:text-gray-100  mr-2">
+                                        <div class="bg-green-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
+                                            Invoice Pembelian
+                                        </div>
+                                    </a>
+                                    @elseif($data->status == "Gagal")
+                                    @endif
                                     @endrole
                                     {{-- Button trash --}}
                                     <form action="{{ route('pembelian.destroy', $data->id) }}" data-confirm="true" onclick="return confirm('Yakin ingin menghapus data?')" method="post">

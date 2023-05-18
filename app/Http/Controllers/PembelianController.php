@@ -133,4 +133,30 @@ class PembelianController extends Controller
             'harga_total' => $totalPrice,
         ]);
     }
+
+    public function konfirmasiPembayaran($id)
+    {
+        $dataPembelian = Pembelian::find($id);
+        return view('pembelian.adminConfirm', ['dataPembelian' => $dataPembelian]);
+        // dd('masuk kesini');
+    }
+
+    public function updateKonfirmasiPembayaran($id, $bool)
+    {
+        $data = Pembelian::find($id);
+        if ($bool === 'gagal') {
+            // $data->update(
+            //     ['status' => 'Gagal']
+            // );
+            $data['status'] = 'Gagal';
+        } else {
+            // $data->update(
+            //     ['status' => 'Dibeli']
+            // );
+            $data['status'] = 'Dibeli';
+        }
+        $data->save();
+        return redirect('/pembelian');
+        // dd('masuk kesini');
+    }
 }

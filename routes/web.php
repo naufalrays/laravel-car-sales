@@ -19,8 +19,9 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::resource('pembelian', PembelianController::class);
     Route::post('pembelian/{id}/konfirmasi', [PembelianController::class, 'informasi']);
+    Route::get('pembelian/{id}/konfirmasiPembayaran', [PembelianController::class, 'konfirmasiPembayaran'])->name('pembelian.konfirmasiPembayaran');
+    Route::get('pembelian/{id}/konfirmasiPembayaran/{bool}', [PembelianController::class, 'updateKonfirmasiPembayaran'])->name('pembelian.updateKonfirmasiPembayaran');
     Route::resource('users', UserController::class);
-    Route::resource('payments', PaymentController::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
