@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('pembelian', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('id_akun');
-            $table->foreignId('id_mobil');
+            $table->foreignId('user_id'); // Penulisan Harus (Nama Tabel)_(id)
+            $table->foreignId('mobil_id'); // Penulisan Harus (Mobil)_(id)
             $table->string('nama_penerima');
             $table->string('nomor_penerima');
             $table->string('alamat_penerima');

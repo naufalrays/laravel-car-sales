@@ -9,11 +9,11 @@ class Mobil extends Model
 {
     use HasFactory;
 
-    protected $table = "mobil";
-    protected $fillable = ['merek', 'tipe', 'stok', 'harga', 'gambar'];
+    protected $table = "mobil"; // table adalah nama tablenya
+    protected $fillable = ['merek', 'tipe', 'stok', 'harga', 'gambar']; // fillable digunakan untuk field apa saja yang dapat diisi lewat form
 
-    public function purchases()
+    public function pembelian() // Ini adalah untuk relasi 1 to Many || pembelian adalah nama database Pembelian (Harus Nama Database)
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Pembelian::class);
     }
 }

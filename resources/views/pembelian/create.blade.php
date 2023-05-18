@@ -3,11 +3,11 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Pembelian') }}
+            {{ __('Pembelian Mobil') }}
         </h2>
     </x-slot>
     {{-- {{ $carData }} --}}
-    @if($carData->stock <= 0 ) <div class="mt-10 py-8 text-center bg-white text-gray-900 dark:text-gray-100 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+    @if($dataMobil->stok <= 0 ) <div class="mt-10 py-8 text-center bg-white text-gray-900 dark:text-gray-100 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
         SOLD OUT
         </div>
         @else
@@ -18,23 +18,23 @@
                     <div class="p-6 grid grid-cols-2 grid-flow-col gap-6 items-center text-gray-900 dark:text-gray-100">
                         <div>
                             <h5>
-                                {{ $carData->name }}
+                                {{ $dataMobil->merek }}
                             </h5>
                             <h2 class="text-2xl">
-                                {{ $carData->type }} 2022
+                                {{ $dataMobil->tipe }} 2022
                             </h2>
                             <h2 class="text-xl text-gray-400">
                                 {{-- Digunakan Untuk memisahkan integer dengan titik --}}
-                                Rp. {{ number_format($carData->price, 0, ',', '.') }}
+                                Rp. {{ number_format($dataMobil->harga, 0, ',', '.') }}
                             </h2>
                             <br>
                             <br>
-                            <img src="{{ url('images/cars/'.$carData->image)  }}" class="max-h-72" alt="">
+                            <img src="{{ url('images/cars/'.$dataMobil->gambar)  }}" class="max-h-72" alt="">
                             <br>
                             <br>
                         </div>
                         <div class="">
-                            <form action="/order" method="post">
+                            <form action="/pembelian/{{ $id }}/konfirmasi" method="post">
                                 @csrf
                                 <div class="mb-6">
                                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ __("Informasi Konsumen") }}
@@ -61,16 +61,16 @@
                                 <div class="mb-6">
                                     <label for="qty" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ __("Jumlah beli") }}
                                     </label>
-                                    <input type="number" oninput="priceTotal({{ $carData->price }});" name="qty" id="qty" min="1" max="{{ $carData->stock }}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="5" value="1" required>
+                                    <input type="number" oninput="priceTotal({{ $dataMobil->harga }});" name="qty" id="qty" min="1" max="{{ $dataMobil->stok }}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="5" value="1" required>
                                 </div>
                                 <label class="font-bold" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ __("Harga Total") }}
                                 </label>
                                 <div class="flex mb-6 font-bold">
                                     <h2 class="text-2xl me-1">Rp.</h2>
-                                    <input type="text" name="totalPrice" id="totalPrice" class="bg-transparent border-0 text-2xl p-0" name="userID" value="{{ number_format($carData->price, 0, ',', '.')  }}" readonly />
+                                    <input type="text" name="totalPrice" id="totalPrice" class="bg-transparent border-0 text-2xl p-0" name="userId" value="{{ number_format($dataMobil->harga, 0, ',', '.')  }}" readonly />
                                 </div>
-                                <input type="hidden" name="userID" value="{{ Auth::user()->id }}" />
-                                <input type="hidden" name="carID" value="{{ $carData->id }}" />
+                                <input type="hidden" name="userId" value="{{ Auth::user()->id }}" />
+                                <input type="hidden" name="carID" value="{{ $dataMobil->id }}" />
                                 <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 justify-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full">
                                     <svg aria-hidden="true" class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>

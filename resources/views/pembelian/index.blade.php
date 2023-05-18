@@ -22,33 +22,35 @@
                 <table class="w-full">
                     <thead class="border-b-2 border-gray-100 dark:border-gray-900">
                         <tr class="bg-gray-200 dark:bg-gray-800 dark:text-white">
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Merek</th>
-                            @role('admin')
+                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Nama Mobil</th>
+                            @role('sales')
                             <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">User</th>
                             @endrole
                             <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Penerima</th>
                             <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Nomor Penerima</th>
                             <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Alamat Penerima</th>
                             <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Jumlah</th>
+                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Status</th>
                             <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Harga Total</th>
                             <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
-                        @foreach ($ordersData as $index => $data)
+                        @foreach ($dataPembelian as $index => $data)
                         {{-- User hanya dapat melihat miliknya, tetapi admin dapat melihat semua datanya --}}
-                        @if (Auth::user()->name === $data->user->name || Auth::user()->hasRole('admin') == 1)
+                        @if (Auth::user()->name === $data->user->name || Auth::user()->hasRole('sales') == 1)
                         <tr class="odd:bg-white even:bg-slate-50 dark:even:bg-gray-800 dark:odd:bg-gray-700 dark:text-white">
-                            <td class="py-3 px-6 text-left whitespace-nowrap"><img src="{{ url('images/cars/'.$data->car->image) }}" class="max-h-32 w-48 mb-2 object-cover"></td>
+                            <td class="py-3 px-6 text-left whitespace-nowrap">{{ $data->mobil->merek }} {{ $data->mobil->tipe }}</td>
                             {{-- Jika admin maka menampilkan akun pembeli --}}
-                            @role('admin')
+                            @role('sales')
                             <td class="py-3 px-6 text-left whitespace-nowrap">{{ $data->user->name }}</td>
-                            @endrole('admin')
-                            <td class="py-3 px-6 text-left whitespace-nowrap">{{ $data->recipient_name }}</td>
-                            <td class="py-3 px-6 text-left whitespace-nowrap">{{ $data->recipient_phone_number }}</td>
-                            <td class="py-3 px-6 text-left whitespace-nowrap">{{ $data->recipient_address }}</td>
-                            <td class="py-3 px-6 text-left whitespace-nowrap">{{ $data->quantity }}</td>
-                            <td class="py-3 px-6 text-left whitespace-nowrap">{{ number_format($data->total_price, 0, ',', '.') }}</td>
+                            @endrole('sales')
+                            <td class="py-3 px-6 text-left whitespace-nowrap">{{ $data->nama_penerima }}</td>
+                            <td class="py-3 px-6 text-left whitespace-nowrap">{{ $data->nomor_penerima }}</td>
+                            <td style="width: 200px" class="py-3 px-6 inline-block">{{ $data->alamat_penerima }}</td>
+                            <td class="py-3 px-6 text-left whitespace-nowrap">{{ $data->jumlah }}</td>
+                            <td style="max-width: 150px;" class="py-3 px-6 text-left inline-block ">Menunggu Konfirmasi</td>
+                            <td class="py-3 px-6 text-left whitespace-nowrap">{{ number_format($data->harga_total, 0, ',', '.') }}</td>
                             <td class="py-3 px-6 text-left whitespace-nowrap">
                                 <div class="flex item-center w-auto">
                                     @role('user')
@@ -59,7 +61,7 @@
                                     </a>
                                     @endrole
                                     {{-- Button trash --}}
-                                    <form action="{{ route('order.destroy', $data->id) }}" data-confirm="true" onclick="return confirm('Yakin ingin menghapus data?')" method="post">
+                                    <form action="{{ route('pembelian.destroy', $data->id) }}" data-confirm="true" onclick="return confirm('Yakin ingin menghapus data?')" method="post">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger btn-block delete">

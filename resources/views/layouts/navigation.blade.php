@@ -19,7 +19,7 @@
                     {{-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link> --}}
-                    <x-nav-link :href="route('order.index')" :active="request()->routeIs('order*')">
+                    <x-nav-link :href="route('pembelian.index')" :active="request()->routeIs('pembelian*')">
                         {{ __('Pembelian') }}
                     </x-nav-link>
 
@@ -98,7 +98,7 @@
                 {{ __('Mobil') }}
             </x-responsive-nav-link>
             @auth
-            <x-responsive-nav-link :href="route('order.index')" :active="request()->routeIs('order.*')">
+            <x-responsive-nav-link :href="route('pembelian.index')" :active="request()->routeIs('pembelian.*')">
                 {{ __('Pembelian') }}
             </x-responsive-nav-link>
             @role('sales')

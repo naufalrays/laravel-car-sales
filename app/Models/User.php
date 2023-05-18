@@ -45,8 +45,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function purchases()
+    public function pembelian() // Ini adalah untuk relasi 1 to Many || pembelian adalah nama database Pembelian (Harus Nama Database)
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Pembelian::class);
     }
 }
