@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Car;
 use App\Models\Mobil;
 use App\Models\User;
+use DateTime;
+use Barryvdh\DomPDF\Facade\Pdf;
 use RealRashid\SweetAlert\Facades\Alert as FacadesAlert;
 
 
@@ -33,12 +35,10 @@ class PembelianController extends Controller
      */
     public function store(Request $request)
     {
-        // $recipient_name = $request->recipient_name;
         // $user = $request->userID;
         $totalPrice = str_replace(".", "", $request->totalPrice);
         $carId = $request->carId;
         $dataMobil = Mobil::find($carId);
-        // dd($dataMobil->stock);
 
         $order = Pembelian::create([
             'user_id' => $request->userId,
@@ -49,9 +49,6 @@ class PembelianController extends Controller
             'jumlah' => $request->jumlah,
             'harga_total' => $request->harga_total,
         ]);
-        // $dataMobil->update([
-        //     'stok' => $dataMobil->stok - $request->qty,
-        // ]);
         FacadesAlert::success('Berhasil', 'Berhasil Melakukan Pembelian'); //Sweet Alert
         return redirect('/pembelian');
     }
@@ -82,8 +79,6 @@ class PembelianController extends Controller
         $data = Pembelian::find($id);
         $user = User::find($data->user_id);
         $mobil = Mobil::find($data->mobil_id);
-        // $request->validate([]);
-        // dd($mobil->tipe);
         if ($request->file('image')) {
             $file = $request->file('image');
             $extension = $file->extension();
@@ -105,15 +100,10 @@ class PembelianController extends Controller
     public function destroy($id)
     {
         $data = Pembelian::find($id);
-        // $carData = Pembelian::find($data->car->id);
-        // $carData->update([
-        //     'stock' => $carData->stock + $data->quantity,
-        // ]);
         if ($data->status !== "Berhasil") {
             $data->delete();
             FacadesAlert::success('Berhasil', 'Berhasil menghapus data'); //Sweet Alert
         }
-        // if($data->)
         return back();
     }
 
@@ -122,7 +112,6 @@ class PembelianController extends Controller
         $totalPrice = str_replace(".", "", $request->totalPrice);
         $carId = $request->carID;
         $dataMobil = Mobil::find($carId);
-        // dd($request);
         return view('pembelian.confirm', [
             'user_id' => $request->userId,
             'data_mobil' => $dataMobil,
@@ -138,25 +127,32 @@ class PembelianController extends Controller
     {
         $dataPembelian = Pembelian::find($id);
         return view('pembelian.adminConfirm', ['dataPembelian' => $dataPembelian]);
-        // dd('masuk kesini');
     }
 
     public function updateKonfirmasiPembayaran($id, $bool)
     {
         $data = Pembelian::find($id);
+        $dataMobil = Mobil::find($data->mobil->id);
         if ($bool === 'gagal') {
-            // $data->update(
-            //     ['status' => 'Gagal']
-            // );
             $data['status'] = 'Gagal';
         } else {
-            // $data->update(
-            //     ['status' => 'Dibeli']
-            // );
             $data['status'] = 'Dibeli';
+            $dataMobil['stok'] = $dataMobil->stok - $data->jumlah;
+            $dataMobil->save();
         }
         $data->save();
         return redirect('/pembelian');
-        // dd('masuk kesini');
+    }
+
+    public function cetakInvoice($id)
+    {
+        // $decrypted = Crypt::decryptString($id);
+        $data = Pembelian::find($id);
+        $timestamp = $data->created_at;
+        $date = new DateTime($timestamp);
+        $time = $date->format('Y-m-d');
+
+        $pdf = PDF::loadView('laporan.faktur', compact(['time', 'data']));
+        return $pdf->stream();
     }
 }

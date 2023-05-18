@@ -31,7 +31,10 @@
                         <div class="text-gray-400 ">Nama Penerima</div>
                         <div class="text-right font-medium text-gray-900 dark:text-white">{{ $dataPembelian->nama_penerima }}</div>
                     </div>
-
+                    <div class="grid grid-cols-2 gap-4 text-xs py-2">
+                        <div class="text-gray-400 ">Email Penerima</div>
+                        <div class="text-right font-medium text-gray-900 dark:text-white">{{ $dataPembelian->user->email }}</div>
+                    </div>
                     <div class="grid grid-cols-2 gap-4 text-xs py-2">
                         <div class="text-gray-400">Nomor Penerima</div>
                         <div class="text-right font-medium text-gray-900 dark:text-white">{{ $dataPembelian->nomor_penerima }}</div>

@@ -11,7 +11,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @auth
             @role('admin')
-            {{-- <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onclick="location.href='{{ route('cars.create') }}'" type="button">
+            {{-- <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-left text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onclick="location.href='{{ route('cars.create') }}'" type="button">
             <p class="text-lg leading-none text-white">Create a new car</p>
             </button> --}}
             @endrole
@@ -21,17 +21,17 @@
                 <table class="w-full">
                     <thead class="border-b-2 border-gray-100 dark:border-gray-900">
                         <tr class="bg-gray-200 dark:bg-gray-800 dark:text-white">
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Nama Mobil</th>
+                            <th class="p-3 w-32 text-left text-sm font-semibold tracking-wide">Nama Mobil</th>
                             @role('sales')
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">User</th>
+                            <th class="p-3 w-20 text-left text-sm font-semibold tracking-wide">User</th>
                             @endrole
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Penerima</th>
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Nomor Penerima</th>
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Alamat Penerima</th>
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Jumlah</th>
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Status</th>
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Harga Total</th>
-                            <th class="py-3 px-6 text-left font-semibold tracking-wide text-left">Aksi</th>
+                            <th class="p-3 w-20 text-left text-sm font-semibold tracking-wide">Penerima</th>
+                            <th class="p-3 w-20 text-left text-sm font-semibold tracking-wide">Nomor Penerima</th>
+                            <th class="p-3 w-48 text-left text-sm font-semibold tracking-wide">Alamat Penerima</th>
+                            <th class="p-3 w-24 text-left text-sm font-semibold tracking-wide">Jumlah</th>
+                            <th class="p-3 w-24 text-left text-sm font-semibold tracking-wide">Status</th>
+                            <th class="p-3 w-24 text-left text-sm font-semibold tracking-wide">Harga Total</th>
+                            <th class="p-3 w-24 text-left text-sm font-semibold tracking-wide">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
@@ -39,18 +39,18 @@
                         {{-- User hanya dapat melihat miliknya, tetapi admin dapat melihat semua datanya --}}
                         @if (Auth::user()->name === $data->user->name || Auth::user()->hasRole('sales') == 1)
                         <tr class="odd:bg-white even:bg-slate-50 dark:even:bg-gray-800 dark:odd:bg-gray-700 dark:text-white">
-                            <td class="py-3 px-6 text-left whitespace-nowrap">{{ $data->mobil->merek }} {{ $data->mobil->tipe }}</td>
+                            <td class="p-3 text-left text-sm whitespace-nowrap">{{ $data->mobil->merek }} {{ $data->mobil->tipe }}</td>
                             {{-- Jika admin maka menampilkan akun pembeli --}}
                             @role('sales')
-                            <td class="py-3 px-6 text-left whitespace-nowrap">{{ $data->user->name }}</td>
+                            <td class="p-3 text-left text-sm whitespace-nowrap">{{ $data->user->name }}</td>
                             @endrole('sales')
-                            <td class="py-3 px-6 text-left whitespace-nowrap">{{ $data->nama_penerima }}</td>
-                            <td class="py-3 px-6 text-left whitespace-nowrap">{{ $data->nomor_penerima }}</td>
-                            <td style="width: 200px" class="py-3 px-6 inline-block">{{ $data->alamat_penerima }}</td>
-                            <td class="py-3 px-6 text-left whitespace-nowrap">{{ $data->jumlah }}</td>
-                            <td style="max-width: 150px;" class="py-3 px-6 text-left inline-block ">{{ $data->status }}</td>
-                            <td class="py-3 px-6 text-left whitespace-nowrap">Rp. {{ number_format($data->harga_total, 0, ',', '.') }}</td>
-                            <td class="py-3 px-6 text-left whitespace-nowrap">
+                            <td class="p-3 text-left text-sm whitespace-nowrap">{{ $data->nama_penerima }}</td>
+                            <td class="p-3 text-left text-sm whitespace-nowrap">{{ $data->nomor_penerima }}</td>
+                            <td class="p-3 text-left text-sm">{{ $data->alamat_penerima }}</td>
+                            <td class="p-3 text-left text-sm whitespace-nowrap">{{ $data->jumlah }}</td>
+                            <td class="p-3 text-left text-sm ">{{ $data->status }}</td>
+                            <td class="p-3 text-left text-sm whitespace-nowrap">Rp. {{ number_format($data->harga_total, 0, ',', '.') }}</td>
+                            <td class="p-3 text-left text-sm whitespace-nowrap">
                                 <div class="flex item-center w-auto">
                                     {{-- Button Untuk Upload Bukti Pembayaran, Invoice, dll --}}
                                     @role('user')
@@ -67,7 +67,7 @@
                                         </div>
                                     </a>
                                     @elseif($data->status == "Dibeli")
-                                    <a href="{{ route('pembelian.edit', $data->id) }}" class="hover:text-gray-100  mr-2">
+                                    <a href="{{ route('pembelian.cetakInvoice', $data->id) }}" class="hover:text-gray-100  mr-2">
                                         <div class="bg-green-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
                                             Invoice Pembelian
                                         </div>
@@ -85,7 +85,7 @@
                                         </div>
                                     </a>
                                     @elseif($data->status == "Dibeli")
-                                    <a href="{{ route('pembelian.edit', $data->id) }}" class="hover:text-gray-100  mr-2">
+                                    <a href="{{ route('pembelian.cetakInvoice', $data->id) }}" class="hover:text-gray-100  mr-2">
                                         <div class="bg-green-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
                                             Invoice Pembelian
                                         </div>
@@ -93,6 +93,7 @@
                                     @elseif($data->status == "Gagal")
                                     @endif
                                     @endrole
+                                    @if($data->status != 'Dibeli')
                                     {{-- Button trash --}}
                                     <form action="{{ route('pembelian.destroy', $data->id) }}" data-confirm="true" onclick="return confirm('Yakin ingin menghapus data?')" method="post">
                                         @csrf
@@ -105,6 +106,7 @@
                                             </div>
                                         </button>
                                     </form>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

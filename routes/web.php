@@ -7,6 +7,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LaporanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -21,10 +22,16 @@ Route::middleware('auth')->group(function () {
     Route::post('pembelian/{id}/konfirmasi', [PembelianController::class, 'informasi']);
     Route::get('pembelian/{id}/konfirmasiPembayaran', [PembelianController::class, 'konfirmasiPembayaran'])->name('pembelian.konfirmasiPembayaran');
     Route::get('pembelian/{id}/konfirmasiPembayaran/{bool}', [PembelianController::class, 'updateKonfirmasiPembayaran'])->name('pembelian.updateKonfirmasiPembayaran');
+    Route::get('pembelian/cetak/{id}', [PembelianController::class, 'cetakInvoice'])->name('pembelian.cetakInvoice');
     Route::resource('users', UserController::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::controller(LaporanController::class)->group(function () {
+    Route::get('/laporan', 'index')->name('laporan.index');
+    Route::get('/laporan/show', 'show')->name('laporan.show');
 });
 
 Route::group(['middleware' => ['role:sales']], function () {
