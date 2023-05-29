@@ -40,6 +40,7 @@
                             <td class="py-3 px-6 text-left whitespace-nowrap">{{ $data->stok }}</td>
                             <td class="py-3 px-6 text-left whitespace-nowrap">Rp.{{ number_format($data->harga, 0, ',', '.')  }}</td>
                             <td class="py-3 px-6 text-left whitespace-nowrap"><img src="{{ url('images/cars/'.$data->gambar) }}" class="max-h-32 w-48 mb-2 object-cover"></td>
+                            {{-- Kasih Tanda/Hapus <!--  --}}
                             <td class="py-3 px-6 text-left whitespace-nowrap">
                                 @auth
                                 @role('sales')
@@ -95,6 +96,8 @@
                                     @endif
                                     @endauth
                             </td>
+                            {{-- Kasih Tanda --> --}}
+
                         </tr>
                         @endforeach
                     </tbody>

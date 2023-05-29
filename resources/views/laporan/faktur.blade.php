@@ -109,7 +109,7 @@
                         <tr>
                             <td class="title">
                                 {{-- <img src="asset/img/logo_ubsi.png" width="80px"> --}}
-                                <img src="{{ url('images/logo_shop.png') }}" width="80px">
+                                <img src="images/logo_shop.png" width="80px">
                             </td>
                             <td>
                                 Invoice : {{ $data->id }}/{{ $data->user->name }}/{{ $time }}</strong><br>

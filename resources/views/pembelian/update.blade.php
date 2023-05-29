@@ -4,9 +4,9 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Upload Bukti Pembayaran') }}
-            <span class="mt-1 text-sm font-medium text-gray-900 flex dark:text-gray-300">Mandiri: 12211212 (Albani Saputra)
+            <span class="mt-1 text-sm font-medium text-gray-900 flex dark:text-gray-300">Mandiri: 12211212 (PT Citra Asri Buana)
             </span>
-            <span class="text-sm font-medium text-gray-900 dark:text-gray-300">BCA: 221312123 (Albani Saputra)
+            <span class="text-sm font-medium text-gray-900 dark:text-gray-300">BCA: 221312123 (PT Citra Asri Buana)
             </span>
         </h2>
     </x-slot>

@@ -158,8 +158,8 @@ class PembelianController extends Controller
         $timestamp = $data->created_at;
         $date = new DateTime($timestamp);
         $time = $date->format('Y-m-d');
-
-        $pdf = PDF::loadView('laporan.faktur', compact(['time', 'data']));
+        // dd($time);
+        $pdf = PDF::loadView('laporan.faktur', ['time' => $time, 'data' =>    $data])->setPaper('A4', 'landscape');
         return $pdf->stream();
     }
 }
