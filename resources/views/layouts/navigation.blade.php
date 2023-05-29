@@ -24,6 +24,9 @@
                     </x-nav-link>
 
                     @role('sales')
+                    <x-nav-link :href="route('penjualan.index')" :active="request()->routeIs('penjualan.*')">
+                        {{ __('Penjualan') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
                         {{ __('Akun') }}
                     </x-nav-link>
@@ -102,6 +105,9 @@
                 {{ __('Pembelian') }}
             </x-responsive-nav-link>
             @role('sales')
+            <x-responsive-nav-link :href="route('penjualan.index')" :active="request()->routeIs('penjualan.*')">
+                {{ __('Penjualan') }}
+            </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('user.*')">
                 {{ __('Akun') }}
             </x-responsive-nav-link>

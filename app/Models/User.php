@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Pembelian::class);
     }
+
+    public function penjualan() // Ini adalah untuk relasi 1 to Many || pembelian adalah nama database Penjualan (Harus Nama Database)
+    {
+        return $this->hasMany(Penjualan::class);
+    }
 }

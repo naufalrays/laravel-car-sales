@@ -34,7 +34,7 @@
                             <br>
                         </div>
                         <div class="">
-                            <form action="/pembelian/{{ $id }}/konfirmasi" method="post">
+                            <form onsubmit="return validateForm()" action="/pembelian/{{ $id }}/konfirmasi" method="post">
                                 @csrf
                                 <div class="mb-6">
                                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ __("Informasi Konsumen") }}
@@ -61,13 +61,13 @@
                                 <div class="mb-6">
                                     <label for="qty" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ __("Jumlah beli") }}
                                     </label>
-                                    <input type="number" oninput="priceTotal({{ $dataMobil->harga }});" name="qty" id="qty" min="1" max="{{ $dataMobil->stok }}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="5" value="1" required>
+                                    <input type="number" oninput="priceTotal({{ $dataMobil->harga }});" name="qty" id="qty" min="1" max="{{ $dataMobil->stok }}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="5" value="0" required>
                                 </div>
                                 <label class="font-bold" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ __("Harga Total") }}
                                 </label>
                                 <div class="flex mb-6 font-bold">
                                     <h2 class="text-2xl me-1">Rp.</h2>
-                                    <input type="text" name="totalPrice" id="totalPrice" class="bg-transparent border-0 text-2xl p-0" name="userId" value="{{ number_format($dataMobil->harga, 0, ',', '.')  }}" readonly />
+                                    <input type="text" name="totalPrice" id="totalPrice" class="bg-transparent border-0 text-2xl p-0" name="userId" value="0" readonly />
                                 </div>
                                 <input type="hidden" name="userId" value="{{ Auth::user()->id }}" />
                                 <input type="hidden" name="carID" value="{{ $dataMobil->id }}" />
@@ -90,9 +90,21 @@
                 console.log(totalPrice);
                 // var totalPrice = document.getElementById("totalPrice")
 
-                totalPrice.value = (qty.value * value).toLocaleString();
+                totalPrice.value = (qty.value * value).toLocaleString().replace(/,/g, '.');;
                 // totalPrice.innerText = (qty.value * value).toLocaleString(); // Digunakan untuk memisahkan integer dengan titik
             }
 
+            function validateForm() {
+                var totalPriceInput = document.getElementById('totalPrice');
+
+                if (totalPriceInput.value == 0) {
+                    alert('Nilai tidak boleh sama dengan 0');
+                    return false; // Menghentikan pengiriman formulir jika validasi gagal
+                }
+
+                return true; // Melanjutkan pengiriman formulir jika validasi berhasil
+            }
+
         </script>
+
 </x-app-layout>

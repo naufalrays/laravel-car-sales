@@ -6,6 +6,7 @@ use App\Models\Pembelian;
 use Illuminate\Http\Request;
 use App\Models\Car;
 use App\Models\Mobil;
+use App\Models\Penjualan;
 use App\Models\User;
 use DateTime;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -110,6 +111,7 @@ class PembelianController extends Controller
     public function informasi(Request $request)
     {
         $totalPrice = str_replace(".", "", $request->totalPrice);
+
         $carId = $request->carID;
         $dataMobil = Mobil::find($carId);
         return view('pembelian.confirm', [
@@ -129,9 +131,10 @@ class PembelianController extends Controller
         return view('pembelian.adminConfirm', ['dataPembelian' => $dataPembelian]);
     }
 
-    public function updateKonfirmasiPembayaran($id, $bool)
+    public function updateKonfirmasiPembayaran($id, $bool,)
     {
         $data = Pembelian::find($id);
+        $dataPenjualan = new Penjualan();
         $dataMobil = Mobil::find($data->mobil->id);
         if ($bool === 'gagal') {
             $data['status'] = 'Gagal';
@@ -139,6 +142,10 @@ class PembelianController extends Controller
             $data['status'] = 'Dibeli';
             $dataMobil['stok'] = $dataMobil->stok - $data->jumlah;
             $dataMobil->save();
+
+            $dataPenjualan['user_id'] = 1;
+            $dataPenjualan['pembelian_id'] = $id;
+            $dataPenjualan->save();
         }
         $data->save();
         return redirect('/pembelian');

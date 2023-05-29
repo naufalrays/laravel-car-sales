@@ -29,4 +29,9 @@ class Pembelian extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function penjualan() // Ini adalah untuk relasi 1 to Many || pembelian adalah nama database Pembelian (Harus Nama Database)
+    {
+        return $this->hasMany(Penjualan::class);
+    }
 }
