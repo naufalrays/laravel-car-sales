@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class LaporanPenjualan extends Model
 {
     use HasFactory;
+
+    protected $table = "lap_penjualan"; // nama tablenya adalah lap_penjualan
+    protected $fillable = ['bulan', 'tahun']; // fillable digunakan untuk field apa saja yang dapat diisi lewat form
 }

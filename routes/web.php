@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PenjualanController;
+use App\Models\LaporanPenjualan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -37,6 +38,7 @@ Route::controller(LaporanController::class)->group(function () {
 Route::group(['middleware' => ['role:sales']], function () {
     Route::resource('users', UserController::class);
     Route::resource('penjualan', PenjualanController::class);
+    Route::get('cetakLaporan/{id}', [LaporanController::class, 'cetakLaporanPenjualan'])->name('laporanPenjualan.cetak');
     Route::post('penjualan/cetakLaporan', [PenjualanController::class, 'cetakLaporan'])->name('penjualan.cetakLaporan');
 });
 

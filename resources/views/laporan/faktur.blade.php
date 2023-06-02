@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Invoice PT XYZ</title>
+    <title>Faktur PT Citra Asri Buana</title>
     <style>
         .invoice-box {
             max-width: 800px;
@@ -112,7 +112,7 @@
                                 <img src="images/logo_shop.png" width="80px">
                             </td>
                             <td>
-                                Invoice : {{ $data->id }}/{{ $data->user->name }}/{{ $time }}</strong><br>
+                                Faktur : {{ $data->id }}/{{ $data->user->name }}/{{ $time }}</strong><br>
                             </td>
                         </tr>
                     </table>

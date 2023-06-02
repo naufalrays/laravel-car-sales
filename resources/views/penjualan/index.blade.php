@@ -17,26 +17,82 @@
             @endrole
             @endauth
 
-            <form action="{{ route('penjualan.cetakLaporan') }}" method="post">
+            <form action="{{ route('penjualan.store') }}" method="post">
                 @csrf
-                <div date-rangepicker class="date">
-                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                        <div class="grid grid-flow-col gap-0">
-                            <div class="col-span-1">
-                                <h2 class="pb-2 dark:text-white font-semibold">Tanggal Awal</h2>
-                                <input type="date" name="startDate" class="border border-gray-400 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            </div>
-                            <div class="col-span-10">
-                                <h2 class="pb-2 dark:text-white font-semibold">Tanggal Akhir</h2>
-                                <input type="date" name="endDate" class="border border-gray-400 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
+                    <div class="grid grid-flow-col gap-6">
+                        <div class="col-span-1">
+                            <div class="mb-6">
+                                <h2 class="pb-2 dark:text-white font-semibold">Pilih Bulan</h2>
+                                <select id="bulan" name="bulan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required autocomplete="roles">
+                                    {{-- <option selected>Pilih Bulan</option> --}}
+                                    <option value="januari">Januari</option>
+                                    <option value="februari">Februari</option>
+                                    <option value="maret">Maret</option>
+                                    <option value="april">April</option>
+                                    <option value="mei">Mei</option>
+                                    <option value="juni">Juni</option>
+                                    <option value="juli">Juli</option>
+                                    <option value="agustus">Agustus</option>
+                                    <option value="september">September</option>
+                                    <option value="oktober">Oktober</option>
+                                    <option value="november">November</option>
+                                    <option value="desember">Desember</option>
+                                </select>
+                                <x-input-error :messages="$errors->get('bulan')" class="mt-2" />
                             </div>
                         </div>
-                        <button class="mt-4 text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800" type="submit">
-                            <p class="text-lg leading-none text-white">Cetak</p>
-                        </button>
+                        <div class="col-span-10">
+                            <h2 class="pb-2 dark:text-white font-semibold">Tahun</h2>
+                            <input type="number" name="tahun" id="tahun" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" min="2000" max="2099" value="2023" required>
+                        </div>
                     </div>
+                    <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="submit">
+                        <p class="text-lg leading-none text-white">Update Laporan</p>
+                    </button>
                 </div>
             </form>
+
+            <h2 class="mt-5 font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Tabel Laporan Penjualan') }}
+            </h2>
+
+            <div class="mt-5 rounded-lg overflow-auto w-1/2">
+                <table class="table-auto w-full">
+                    <thead class="border-b-2 border-gray-100 dark:border-gray-900">
+                        <tr class="bg-gray-200 dark:bg-gray-800 dark:text-white">
+                            <th class="p-3 w-32 text-left text-sm font-semibold tracking-wide">No.</th>
+                            <th class="p-3 w-32 text-left text-sm font-semibold tracking-wide">Bulan</th>
+                            <th class="p-3 w-32 text-left text-sm font-semibold tracking-wide">Tahun</th>
+                            <th class="p-3 w-32 text-left text-sm font-semibold tracking-wide">Tanggal Update</th>
+                            <th class="p-3 w-24 text-left text-sm font-semibold tracking-wide">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                        @foreach ($dataLaporan as $index => $data)
+                        <tr class="odd:bg-white even:bg-slate-50 dark:even:bg-gray-800 dark:odd:bg-gray-700 dark:text-white">
+                            <td class="p-3 text-left text-sm whitespace-nowrap">{{ $index+1 }}</td>
+                            <td class="p-3 text-left text-sm whitespace-nowrap">{{ $data->bulan }}</td>
+                            <td class="p-3 text-left text-sm whitespace-nowrap">{{ $data->tahun }}</td>
+                            <td class="p-3 text-left text-sm whitespace-nowrap">{{ $data->updated_at }}</td>
+                            <td class="p-3 text-left text-sm whitespace-nowrap">
+                                <div class="flex item-center">
+                                    <a href="{{ route('laporanPenjualan.cetak', $data->id) }}" class="hover:text-gray-100 mr-2">
+                                        <div class="bg-green-700 p-2 rounded-lg mr-2 text-white hover:text-black">
+                                            Lihat Laporan
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 class="mt-5 font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Tabel Penjualan') }}
+            </h2>
 
             <div class="mt-5 overflow-auto rounded-lg shadow">
                 <table class="w-full">

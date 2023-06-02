@@ -3,12 +3,15 @@
 /public/build
 /public/hot
 /public/storage
+/public/images/buktiPembayaran
 /storage/*.key
 /vendor
 .env
 .env.backup
 .env.production
 .phpunit.result.cache
+.DS_Store
+.DS_Store?
 Homestead.json
 Homestead.yaml
 auth.json
