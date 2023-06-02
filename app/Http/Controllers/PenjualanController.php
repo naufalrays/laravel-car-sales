@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Penjualan;
 use Illuminate\Http\Request;
+use DateTime;
+use Barryvdh\DomPDF\Facade\Pdf;
+use RealRashid\SweetAlert\Facades\Alert as FacadesAlert;
+
 
 class PenjualanController extends Controller
 {
@@ -35,9 +39,22 @@ class PenjualanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, string $data)
     {
-        //
+        $data = Penjualan::find();
+        dd($id);
+        $bulan = '05'; // Bulan yang ingin Anda ambil datanya
+        $tahun = '2023'; // Tahun yang ingin Anda ambil datanya
+
+        $data = Penjualan::whereMonth('created_at', $bulan)
+            ->whereYear('created_at', $tahun)
+            ->get();
+        $timestamp = $data->created_at;
+        $date = new DateTime($timestamp);
+        $time = $date->format('Y-m-d');
+        // dd($time);
+        $pdf = PDF::loadView('laporan.faktur', ['time' => $time, 'data' =>    $data])->setPaper('A4', 'landscape');
+        return $pdf->stream();
     }
 
     /**
@@ -62,5 +79,24 @@ class PenjualanController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function cetakLaporan(Request $request,)
+    {
+        dd($request->startDate, $request->endDate);
+        dd($request->endDate);
+        $data = Penjualan::find();
+        $bulan = '05'; // Bulan yang ingin Anda ambil datanya
+        $tahun = '2023'; // Tahun yang ingin Anda ambil datanya
+
+        $data = Penjualan::whereMonth('created_at', $bulan)
+            ->whereYear('created_at', $tahun)
+            ->get();
+        $timestamp = $data->created_at;
+        $date = new DateTime($timestamp);
+        $time = $date->format('Y-m-d');
+        // dd($time);
+        $pdf = PDF::loadView('laporan.faktur', ['time' => $time, 'data' =>    $data])->setPaper('A4', 'landscape');
+        return $pdf->stream();
     }
 }

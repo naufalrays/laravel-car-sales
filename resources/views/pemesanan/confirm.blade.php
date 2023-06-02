@@ -11,7 +11,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="p-6 grid grid-cols-2 grid-flow-col gap-6 items-center   text-gray-900 dark:text-gray-100">
                 <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <form action="/pembelian" method="post">
+                    <form action="/pemesanan" method="post">
                         @csrf
                         <input type="hidden" name="userId" value="{{ Auth::user()->id }}" />
                         <input type="hidden" name="carId" value="{{ $data_mobil->id }}" />

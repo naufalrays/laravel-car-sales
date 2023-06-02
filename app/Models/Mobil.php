@@ -12,8 +12,8 @@ class Mobil extends Model
     protected $table = "mobil"; // table adalah nama tablenya
     protected $fillable = ['merek', 'tipe', 'stok', 'harga', 'gambar']; // fillable digunakan untuk field apa saja yang dapat diisi lewat form
 
-    public function pembelian() // Ini adalah untuk relasi 1 to Many || pembelian adalah nama database Pembelian (Harus Nama Database)
+    public function pemesanan() // Ini adalah untuk relasi 1 to Many || pemesanan adalah nama database Pemesanan (Harus Nama Database)
     {
-        return $this->hasMany(Pembelian::class);
+        return $this->hasMany(Pemesanan::class);
     }
 }

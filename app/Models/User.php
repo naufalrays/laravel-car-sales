@@ -45,12 +45,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function pembelian() // Ini adalah untuk relasi 1 to Many || pembelian adalah nama database Pembelian (Harus Nama Database)
+    public function pemesanan() // Ini adalah untuk relasi 1 to Many || pemesanan adalah nama database Pemesanan (Harus Nama Database)
     {
-        return $this->hasMany(Pembelian::class);
+        return $this->hasMany(Pemesanan::class);
     }
 
-    public function penjualan() // Ini adalah untuk relasi 1 to Many || pembelian adalah nama database Penjualan (Harus Nama Database)
+    public function penjualan() // Ini adalah untuk relasi 1 to Many || pemesanan adalah nama database Penjualan (Harus Nama Database)
     {
         return $this->hasMany(Penjualan::class);
     }

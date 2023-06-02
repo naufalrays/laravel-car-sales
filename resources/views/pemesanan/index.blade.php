@@ -3,7 +3,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Pembelian') }}
+            {{ __('Pemesanan') }}
         </h2>
     </x-slot>
 
@@ -35,7 +35,7 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
-                        @foreach ($dataPembelian as $index => $data)
+                        @foreach ($dataPemesanan as $index => $data)
                         {{-- User hanya dapat melihat miliknya, tetapi admin dapat melihat semua datanya --}}
                         @if (Auth::user()->name === $data->user->name || Auth::user()->hasRole('sales') == 1)
                         <tr class="odd:bg-white even:bg-slate-50 dark:even:bg-gray-800 dark:odd:bg-gray-700 dark:text-white">
@@ -53,49 +53,53 @@
                             <td class="p-3 text-left text-sm whitespace-nowrap">
                                 <div class="flex item-center w-auto">
                                     {{-- Button Untuk Upload Bukti Pembayaran, Invoice, dll --}}
+                                    {{-- Jika Rolenya User Maka ini yang akan ditampilkan --}}
                                     @role('user')
-                                    @if($data->status == 'Menunggu Pembayaran')
-                                    <a href="{{ route('pembelian.edit', $data->id) }}" class="hover:text-gray-100  mr-2">
+                                    {{-- Jika statusnya Menunggu Pembayaran dan Gagal maka hanya akan menampikan Upload Bukti Pembayaran --}}
+                                    @if($data->status == 'Menunggu Pembayaran' || $data->status == 'Gagal')
+                                    <a href="{{ route('pemesanan.edit', $data->id) }}" class="hover:text-gray-100  mr-2">
                                         <div class="bg-blue-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
                                             Upload Bukti Pembayaran
                                         </div>
                                     </a>
+                                    {{-- Jika statusnya Menunggu Konfirmasi maka hanya akan menampikan Ubah Data --}}
                                     @elseif($data->status == 'Menunggu Konfirmasi')
-                                    <a href="{{ route('pembelian.edit', $data->id) }}" class="hover:text-gray-100  mr-2">
+                                    <a href="{{ route('pemesanan.edit', $data->id) }}" class="hover:text-gray-100  mr-2">
                                         <div class="bg-blue-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
                                             Ubah Data
                                         </div>
                                     </a>
+                                    {{-- Jika statusnya Dibeli maka hanya akan menampikan Invoice Pemesanan --}}
                                     @elseif($data->status == "Dibeli")
-                                    <a href="{{ route('pembelian.cetakInvoice', $data->id) }}" class="hover:text-gray-100  mr-2">
+                                    <a href="{{ route('pemesanan.cetakInvoice', $data->id) }}" class="hover:text-gray-100  mr-2">
                                         <div class="bg-green-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
-                                            Invoice Pembelian
+                                            Invoice Pemesanan
                                         </div>
                                     </a>
-                                    @elseif($data->status == "Gagal")
                                     @endif
+                                    {{-- Jika Rolenya Sales Maka ini yang akan ditampilkan --}}
                                     @endrole
                                     {{-- Button Untuk Konfirmasi Pembayaran, Invoice, dll --}}
                                     @role('sales')
                                     @if($data->status == 'Menunggu Pembayaran')
                                     @elseif($data->status == 'Menunggu Konfirmasi')
-                                    <a href="{{ route('pembelian.konfirmasiPembayaran', $data->id) }}" class="hover:text-gray-100  mr-2">
+                                    <a href="{{ route('pemesanan.konfirmasiPembayaran', $data->id) }}" class="hover:text-gray-100  mr-2">
                                         <div class="bg-blue-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
                                             Konfirmasi Pembayaran
                                         </div>
                                     </a>
                                     @elseif($data->status == "Dibeli")
-                                    <a href="{{ route('pembelian.cetakInvoice', $data->id) }}" class="hover:text-gray-100  mr-2">
+                                    <a href="{{ route('pemesanan.cetakInvoice', $data->id) }}" class="hover:text-gray-100  mr-2">
                                         <div class="bg-green-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
-                                            Invoice Pembelian
+                                            Invoice Pemesanan
                                         </div>
                                     </a>
-                                    @elseif($data->status == "Gagal")
                                     @endif
                                     @endrole
+                                    {{-- Jika Statusnya tidak sama dengan dibeli maka akan memunculkan button trash --}}
                                     @if($data->status != 'Dibeli')
                                     {{-- Button trash --}}
-                                    <form action="{{ route('pembelian.destroy', $data->id) }}" data-confirm="true" onclick="return confirm('Yakin ingin menghapus data?')" method="post">
+                                    <form action="{{ route('pemesanan.destroy', $data->id) }}" data-confirm="true" onclick="return confirm('Yakin ingin menghapus data?')" method="post">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger btn-block delete">

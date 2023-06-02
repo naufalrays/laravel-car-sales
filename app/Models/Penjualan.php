@@ -15,8 +15,8 @@ class Penjualan extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function pembelian() // Ini adalah untuk relasi 1 to Many || mobil adalah nama database Mobil (Harus Nama Database)
+    public function pemesanan() // Ini adalah untuk relasi 1 to Many || mobil adalah nama database Mobil (Harus Nama Database)
     {
-        return $this->belongsTo(Pembelian::class);
+        return $this->belongsTo(Pemesanan::class);
     }
 }

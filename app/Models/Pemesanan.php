@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pembelian extends Model
+class Pemesanan extends Model
 {
     use HasFactory;
-    protected $table = 'pembelian'; // table adalah nama tablenya
+    protected $table = 'Pemesanan'; // table adalah nama tablenya
 
     protected $fillable = [
         'user_id',
@@ -30,7 +30,7 @@ class Pembelian extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function penjualan() // Ini adalah untuk relasi 1 to Many || pembelian adalah nama database Pembelian (Harus Nama Database)
+    public function penjualan() // Ini adalah untuk relasi 1 to Many || pemesanan adalah nama database Pemesanan (Harus Nama Database)
     {
         return $this->hasMany(Penjualan::class);
     }

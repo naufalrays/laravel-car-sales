@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('penjualan', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('pembelian_id');
+            $table->foreignId('pemesanan_id');
+            $table->date('tanggal_lunas');
             $table->timestamps();
         });
     }

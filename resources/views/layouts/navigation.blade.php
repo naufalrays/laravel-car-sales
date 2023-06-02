@@ -19,8 +19,8 @@
                     {{-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link> --}}
-                    <x-nav-link :href="route('pembelian.index')" :active="request()->routeIs('pembelian*')">
-                        {{ __('Pembelian') }}
+                    <x-nav-link :href="route('pemesanan.index')" :active="request()->routeIs('pemesanan*')">
+                        {{ __('Pemesanan') }}
                     </x-nav-link>
 
                     @role('sales')
@@ -101,8 +101,8 @@
                 {{ __('Mobil') }}
             </x-responsive-nav-link>
             @auth
-            <x-responsive-nav-link :href="route('pembelian.index')" :active="request()->routeIs('pembelian.*')">
-                {{ __('Pembelian') }}
+            <x-responsive-nav-link :href="route('pemesanan.index')" :active="request()->routeIs('pemesanan.*')">
+                {{ __('Pemesanan') }}
             </x-responsive-nav-link>
             @role('sales')
             <x-responsive-nav-link :href="route('penjualan.index')" :active="request()->routeIs('penjualan.*')">

@@ -3,7 +3,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Pembelian Mobil') }}
+            {{ __('Pemesanan Mobil') }}
         </h2>
     </x-slot>
     {{-- {{ $carData }} --}}
@@ -34,7 +34,7 @@
                             <br>
                         </div>
                         <div class="">
-                            <form onsubmit="return validateForm()" action="/pembelian/{{ $id }}/konfirmasi" method="post">
+                            <form onsubmit="return validateForm()" action="/pemesanan/{{ $id }}/konfirmasi" method="post">
                                 @csrf
                                 <div class="mb-6">
                                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ __("Informasi Konsumen") }}

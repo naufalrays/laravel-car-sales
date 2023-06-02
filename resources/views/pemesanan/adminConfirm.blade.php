@@ -17,41 +17,41 @@
                     </div>
                     <div class="grid grid-cols-2 gap-4 text-xs py-2">
                         <div class="text-gray-400">Merek</div>
-                        <span id="dataMobil" class="text-right font-medium text-gray-900 dark:text-white">{{ $dataPembelian->mobil->merek }} {{ $dataPembelian->mobil->tipe }}</span>
+                        <span id="dataMobil" class="text-right font-medium text-gray-900 dark:text-white">{{ $dataPemesanan->mobil->merek }} {{ $dataPemesanan->mobil->tipe }}</span>
                     </div>
                     <div class="grid grid-cols-2 gap-4 text-xs py-2">
                         <div class="text-gray-400">Jumlah</div>
-                        <span id="dataSpan2" class="text-right font-medium text-gray-900 dark:text-white">{{ $dataPembelian->jumlah }}</span>
+                        <span id="dataSpan2" class="text-right font-medium text-gray-900 dark:text-white">{{ $dataPemesanan->jumlah }}</span>
                     </div>
                     <div class="grid grid-cols-2 gap-4 text-xs py-2">
                         <div class="text-gray-400">Harga</div>
-                        <div class="text-right font-medium text-gray-900 dark:text-white">Rp.{{ number_format($dataPembelian->mobil->harga, 0, ',', '.') }}</div>
+                        <div class="text-right font-medium text-gray-900 dark:text-white">Rp.{{ number_format($dataPemesanan->mobil->harga, 0, ',', '.') }}</div>
                     </div>
                     <div class="grid grid-cols-2 gap-4 text-xs py-2">
                         <div class="text-gray-400 ">Nama Penerima</div>
-                        <div class="text-right font-medium text-gray-900 dark:text-white">{{ $dataPembelian->nama_penerima }}</div>
+                        <div class="text-right font-medium text-gray-900 dark:text-white">{{ $dataPemesanan->nama_penerima }}</div>
                     </div>
                     <div class="grid grid-cols-2 gap-4 text-xs py-2">
                         <div class="text-gray-400 ">Email Penerima</div>
-                        <div class="text-right font-medium text-gray-900 dark:text-white">{{ $dataPembelian->user->email }}</div>
+                        <div class="text-right font-medium text-gray-900 dark:text-white">{{ $dataPemesanan->user->email }}</div>
                     </div>
                     <div class="grid grid-cols-2 gap-4 text-xs py-2">
                         <div class="text-gray-400">Nomor Penerima</div>
-                        <div class="text-right font-medium text-gray-900 dark:text-white">{{ $dataPembelian->nomor_penerima }}</div>
+                        <div class="text-right font-medium text-gray-900 dark:text-white">{{ $dataPemesanan->nomor_penerima }}</div>
                     </div>
                     <div class="grid grid-cols-2 gap-4 text-xs py-2">
                         <div class="text-gray-400">Alamat Penerima</div>
-                        <div class="text-right font-medium text-gray-900 dark:text-white">{{ $dataPembelian->alamat_penerima }}</div>
+                        <div class="text-right font-medium text-gray-900 dark:text-white">{{ $dataPemesanan->alamat_penerima }}</div>
                     </div>
                     <div class="grid grid-cols-2 gap-4 text-xs py-2">
                         <div class="text-gray-400">Total</div>
-                        <div class="text-right font-bold text-xl text-gray-900 dark:text-white">Rp. {{ number_format($dataPembelian->harga_total, 0, ',', '.') }}</div>
+                        <div class="text-right font-bold text-xl text-gray-900 dark:text-white">Rp. {{ number_format($dataPemesanan->harga_total, 0, ',', '.') }}</div>
                     </div>
                     <div class="flex">
-                        <a href="{{ route('pembelian.updateKonfirmasiPembayaran',['id' => $dataPembelian->id, 'bool' => 'gagal']) }}" class="text-white mt-3 bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-200 font-medium rounded-lg text-sm px-5 py-2.5 justify-center inline-flex items-center mr-2 dark:bg-red-600 dark:hover:bg-red-800 dark:focus:ring-red-600 w-full">
+                        <a href="{{ route('pemesanan.updateKonfirmasiPembayaran',['id' => $dataPemesanan->id, 'bool' => 'gagal']) }}" class="text-white mt-3 bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-200 font-medium rounded-lg text-sm px-5 py-2.5 justify-center inline-flex items-center mr-2 dark:bg-red-600 dark:hover:bg-red-800 dark:focus:ring-red-600 w-full">
                             Batalkan
                         </a>
-                        <a href="{{ route('pembelian.updateKonfirmasiPembayaran',['id' => $dataPembelian->id, 'bool' => 'berhasil']) }}" class="text-white mt-3 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 justify-center inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 w-full">
+                        <a href="{{ route('pemesanan.updateKonfirmasiPembayaran',['id' => $dataPemesanan->id, 'bool' => 'berhasil']) }}" class="text-white mt-3 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 justify-center inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 w-full">
                             Konfirmasi
                         </a>
                     </div>
@@ -59,7 +59,7 @@
                 <div>
                     <label class="block mb-2 font-bold text-xl text-gray-900 dark:text-white"> {{ __("Bukti Pembayaran :") }}
                     </label>
-                    <img src="{{ url('images/buktiPembayaran/'.$dataPembelian->gambar)  }}" class="max-h-72" alt="">
+                    <img src="{{ url('images/buktiPembayaran/'.$dataPemesanan->gambar)  }}" class="max-h-72" alt="">
                 </div>
             </div>
         </div>

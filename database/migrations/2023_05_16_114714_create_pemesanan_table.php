@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pembelian', function (Blueprint $table) {
+        Schema::create('pemesanan', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('user_id'); // Penulisan Harus (Nama Tabel)_(id)
             $table->foreignId('mobil_id'); // Penulisan Harus (Mobil)_(id)
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pembelian');
+        Schema::dropIfExists('pemesanan');
     }
 };

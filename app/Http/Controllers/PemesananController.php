@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pembelian;
+use App\Models\Pemesanan;
 use Illuminate\Http\Request;
 use App\Models\Car;
 use App\Models\Mobil;
@@ -13,15 +13,15 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use RealRashid\SweetAlert\Facades\Alert as FacadesAlert;
 
 
-class PembelianController extends Controller
+class PemesananController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $dataPembelian = Pembelian::all();
-        return view('pembelian.index', ['dataPembelian' => $dataPembelian]);
+        $dataPemesanan = Pemesanan::all();
+        return view('pemesanan.index', ['dataPemesanan' => $dataPemesanan]);
     }
 
     /**
@@ -41,7 +41,7 @@ class PembelianController extends Controller
         $carId = $request->carId;
         $dataMobil = Mobil::find($carId);
 
-        $order = Pembelian::create([
+        $order = Pemesanan::create([
             'user_id' => $request->userId,
             'mobil_id' => $carId,
             'nama_penerima' => $request->nama_penerima,
@@ -50,8 +50,8 @@ class PembelianController extends Controller
             'jumlah' => $request->jumlah,
             'harga_total' => $request->harga_total,
         ]);
-        FacadesAlert::success('Berhasil', 'Berhasil Melakukan Pembelian'); //Sweet Alert
-        return redirect('/pembelian');
+        FacadesAlert::success('Berhasil', 'Berhasil Melakukan Pemesanan'); //Sweet Alert
+        return redirect('/pemesanan');
     }
 
     /**
@@ -60,7 +60,7 @@ class PembelianController extends Controller
     public function show($id)
     {
         $dataMobil = Mobil::find($id);
-        return view('pembelian.create', ['dataMobil' => $dataMobil, 'id' => $id]);
+        return view('pemesanan.create', ['dataMobil' => $dataMobil, 'id' => $id]);
     }
 
     /**
@@ -68,8 +68,8 @@ class PembelianController extends Controller
      */
     public function edit($id)
     {
-        $dataPembelian = Pembelian::find($id);
-        return view('pembelian.update', ['dataPembelian' => $dataPembelian]);
+        $dataPemesanan = Pemesanan::find($id);
+        return view('pemesanan.update', ['dataPemesanan' => $dataPemesanan]);
     }
 
     /**
@@ -77,7 +77,7 @@ class PembelianController extends Controller
      */
     public function update(Request $request,  $id)
     {
-        $data = Pembelian::find($id);
+        $data = Pemesanan::find($id);
         $user = User::find($data->user_id);
         $mobil = Mobil::find($data->mobil_id);
         if ($request->file('image')) {
@@ -92,7 +92,7 @@ class PembelianController extends Controller
             $data['status'] = 'Menunggu Konfirmasi';
         }
         $data->save();
-        return redirect('pembelian');
+        return redirect('pemesanan');
     }
 
     /**
@@ -100,7 +100,7 @@ class PembelianController extends Controller
      */
     public function destroy($id)
     {
-        $data = Pembelian::find($id);
+        $data = Pemesanan::find($id);
         if ($data->status !== "Berhasil") {
             $data->delete();
             FacadesAlert::success('Berhasil', 'Berhasil menghapus data'); //Sweet Alert
@@ -114,7 +114,7 @@ class PembelianController extends Controller
 
         $carId = $request->carID;
         $dataMobil = Mobil::find($carId);
-        return view('pembelian.confirm', [
+        return view('pemesanan.confirm', [
             'user_id' => $request->userId,
             'data_mobil' => $dataMobil,
             'nama_penerima' => $request->recipient_name,
@@ -127,13 +127,15 @@ class PembelianController extends Controller
 
     public function konfirmasiPembayaran($id)
     {
-        $dataPembelian = Pembelian::find($id);
-        return view('pembelian.adminConfirm', ['dataPembelian' => $dataPembelian]);
+        $dataPemesanan = Pemesanan::find($id);
+        return view('pemesanan.adminConfirm', ['dataPemesanan' => $dataPemesanan]);
     }
 
     public function updateKonfirmasiPembayaran($id, $bool,)
     {
-        $data = Pembelian::find($id);
+        $date = new DateTime(now());
+        $time = $date->format('Y-m-d');
+        $data = Pemesanan::find($id);
         $dataPenjualan = new Penjualan();
         $dataMobil = Mobil::find($data->mobil->id);
         if ($bool === 'gagal') {
@@ -144,17 +146,18 @@ class PembelianController extends Controller
             $dataMobil->save();
 
             $dataPenjualan['user_id'] = 1;
-            $dataPenjualan['pembelian_id'] = $id;
+            $dataPenjualan['pemesanan_id'] = $id;
+            $dataPenjualan['tanggal_lunas'] = $time;
             $dataPenjualan->save();
         }
         $data->save();
-        return redirect('/pembelian');
+        return redirect('/pemesanan');
     }
 
     public function cetakInvoice($id)
     {
         // $decrypted = Crypt::decryptString($id);
-        $data = Pembelian::find($id);
+        $data = Pemesanan::find($id);
         $timestamp = $data->created_at;
         $date = new DateTime($timestamp);
         $time = $date->format('Y-m-d');
