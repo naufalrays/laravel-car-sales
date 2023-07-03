@@ -3,7 +3,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Pemesanan') }}
+            {{ __('Penjualan') }}
         </h2>
     </x-slot>
 
@@ -29,7 +29,7 @@
                             <th class="p-3 w-20 text-left text-sm font-semibold tracking-wide">Nomor Penerima</th>
                             <th class="p-3 w-48 text-left text-sm font-semibold tracking-wide">Alamat Penerima</th>
                             <th class="p-3 w-24 text-left text-sm font-semibold tracking-wide">Jumlah</th>
-                            <th class="p-3 w-24 text-left text-sm font-semibold tracking-wide">Status</th>
+                            <th class="p-3 w-40 text-left text-sm font-semibold tracking-wide">Status</th>
                             <th class="p-3 w-24 text-left text-sm font-semibold tracking-wide">Harga Total</th>
                             <th class="p-3 w-24 text-left text-sm font-semibold tracking-wide">Aksi</th>
                         </tr>
@@ -48,7 +48,15 @@
                             <td class="p-3 text-left text-sm whitespace-nowrap">{{ $data->nomor_penerima }}</td>
                             <td class="p-3 text-left text-sm">{{ $data->alamat_penerima }}</td>
                             <td class="p-3 text-left text-sm whitespace-nowrap">{{ $data->jumlah }}</td>
-                            <td class="p-3 text-left text-sm ">{{ $data->status }}</td>
+                            <td class="p-3 text-left text-sm ">
+                                <div class="text-base text-sm text-gray-900 dark:text-white overflow-hidden truncate">
+                                    {{ $data->status }}
+                                </div>
+                                <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                                    {{ $data->alasan_gagal }}
+
+                                </div>
+                            </td>
                             <td class="p-3 text-left text-sm whitespace-nowrap">Rp. {{ number_format($data->harga_total, 0, ',', '.') }}</td>
                             <td class="p-3 text-left text-sm whitespace-nowrap">
                                 <div class="flex item-center w-auto">

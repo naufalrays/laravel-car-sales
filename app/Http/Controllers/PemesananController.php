@@ -131,15 +131,17 @@ class PemesananController extends Controller
         return view('pemesanan.adminConfirm', ['dataPemesanan' => $dataPemesanan]);
     }
 
-    public function updateKonfirmasiPembayaran($id, $bool,)
+    public function updateKonfirmasiPembayaran(Request $request, $id)
     {
+        $confirm = $request->confirm;
         $date = new DateTime(now());
         $time = $date->format('Y-m-d');
         $data = Pemesanan::find($id);
         $dataPenjualan = new Penjualan();
         $dataMobil = Mobil::find($data->mobil->id);
-        if ($bool === 'gagal') {
+        if ($confirm === 'batal') {
             $data['status'] = 'Gagal';
+            $data['alasan_gagal'] = $request->alasan_batal;
         } else {
             $data['status'] = 'Dibeli';
             $dataMobil['stok'] = $dataMobil->stok - $data->jumlah;

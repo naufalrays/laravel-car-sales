@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('pemesanan', PemesananController::class);
     Route::post('pemesanan/{id}/konfirmasi', [PemesananController::class, 'informasi']);
     Route::get('pemesanan/{id}/konfirmasiPembayaran', [PemesananController::class, 'konfirmasiPembayaran'])->name('pemesanan.konfirmasiPembayaran');
-    Route::get('pemesanan/{id}/konfirmasiPembayaran/{bool}', [PemesananController::class, 'updateKonfirmasiPembayaran'])->name('pemesanan.updateKonfirmasiPembayaran');
+    Route::post('pemesanan/{id}/konfirmasiPembayaran', [PemesananController::class, 'updateKonfirmasiPembayaran'])->name('pemesanan.updateKonfirmasiPembayaran');
     Route::get('pemesanan/cetak/{id}', [PemesananController::class, 'cetakInvoice'])->name('pemesanan.cetakInvoice');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

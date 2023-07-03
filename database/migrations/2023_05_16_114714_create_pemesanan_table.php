@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('jumlah');
             $table->bigInteger('harga_total');
             $table->string('status')->default('Menunggu Pembayaran');
+            $table->string('alasan_gagal')->nullable();
             $table->string('gambar')->nullable();
             $table->timestamps();
         });
