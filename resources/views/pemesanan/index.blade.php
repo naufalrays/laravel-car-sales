@@ -77,8 +77,32 @@
                                             Ubah Data
                                         </div>
                                     </a>
+                                    {{-- INI --}}
+                                    @elseif($data->status == 'Menunggu Konfirmasi Retur')
+                                    <a href="{{ route('pemesanan.batalkanRetur', $data->id) }}" onclick="return confirm('Yakin ingin membatalkan?')" class="hover:text-gray-100  mr-2">
+                                        <div class="bg-blue-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
+                                            Batalkan Retur
+                                        </div>
+                                    </a>
+                                    {{-- Jika statusnya Dibeli maka hanya akan menampikan Invoice Pemesanan --}}
+                                    @elseif($data->status == 'Gagal Retur')
+                                    <a href="{{ route('retur.edit', $data->id) }}" class="hover:text-gray-100  mr-2">
+                                        <div class="bg-blue-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
+                                            Retur
+                                        </div>
+                                    </a>
+                                    <a href="{{ route('pemesanan.cetakInvoice', $data->id) }}" class="hover:text-gray-100  mr-2">
+                                        <div class="bg-green-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
+                                            Invoice Pemesanan
+                                        </div>
+                                    </a>
                                     {{-- Jika statusnya Dibeli maka hanya akan menampikan Invoice Pemesanan --}}
                                     @elseif($data->status == "Dibeli")
+                                    <a href="{{ route('retur.edit', $data->id) }}" class="hover:text-gray-100  mr-2">
+                                        <div class="bg-blue-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
+                                            Retur
+                                        </div>
+                                    </a>
                                     <a href="{{ route('pemesanan.cetakInvoice', $data->id) }}" class="hover:text-gray-100  mr-2">
                                         <div class="bg-green-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
                                             Invoice Pemesanan
@@ -96,7 +120,13 @@
                                             Konfirmasi Pembayaran
                                         </div>
                                     </a>
-                                    @elseif($data->status == "Dibeli")
+                                    @elseif($data->status == 'Menunggu Konfirmasi Retur')
+                                    <a href="{{ route('pemesanan.konfirmasiRetur', $data->id) }}" class="hover:text-gray-100  mr-2">
+                                        <div class="bg-blue-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
+                                            Konfirmasi Retur
+                                        </div>
+                                    </a>
+                                    @elseif($data->status == "Dibeli" || $data->status == "Gagal Retur")
                                     <a href="{{ route('pemesanan.cetakInvoice', $data->id) }}" class="hover:text-gray-100  mr-2">
                                         <div class="bg-green-700 p-2 rounded-lg mr-2 text-white hover:text-black ">
                                             Invoice Pemesanan
@@ -105,7 +135,7 @@
                                     @endif
                                     @endrole
                                     {{-- Jika Statusnya tidak sama dengan dibeli maka akan memunculkan button trash --}}
-                                    @if($data->status != 'Dibeli')
+                                    @if($data->status !== 'Dibeli' && $data->status !== 'Menunggu Konfirmasi Retur' && $data->status !== 'Gagal Retur')
                                     {{-- Button trash --}}
                                     <form action="{{ route('pemesanan.destroy', $data->id) }}" data-confirm="true" onclick="return confirm('Yakin ingin menghapus data?')" method="post">
                                         @csrf

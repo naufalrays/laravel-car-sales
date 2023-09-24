@@ -16,4 +16,9 @@ class Mobil extends Model
     {
         return $this->hasMany(Pemesanan::class);
     }
+
+    public function retur()
+    {
+        return $this->hasMany(Retur::class);
+    }
 }

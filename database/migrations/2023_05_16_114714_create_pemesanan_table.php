@@ -15,14 +15,14 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->foreignId('user_id'); // Penulisan Harus (Nama Tabel)_(id)
             $table->foreignId('mobil_id'); // Penulisan Harus (Mobil)_(id)
-            $table->string('nama_penerima');
-            $table->string('nomor_penerima');
-            $table->string('alamat_penerima');
+            $table->string('nama_penerima', 50);
+            $table->string('nomor_penerima', 14);
+            $table->string('alamat_penerima', 120);
             $table->integer('jumlah');
             $table->bigInteger('harga_total');
-            $table->string('status')->default('Menunggu Pembayaran');
-            $table->string('alasan_gagal')->nullable();
-            $table->string('gambar')->nullable();
+            $table->string('status', 30)->default('Menunggu Pembayaran');
+            $table->string('alasan_gagal', 255)->nullable();
+            $table->string('gambar', 50)->nullable();
             $table->timestamps();
         });
     }

@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('mobil', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('merek');
-            $table->string('tipe');
+            $table->string('merek', 10);
+            $table->string('tipe', 50);
             $table->integer('stok');
             $table->bigInteger('harga');
-            $table->string('gambar');
+            $table->string('gambar', 50);
             $table->timestamps();
         });
     }

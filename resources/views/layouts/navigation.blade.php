@@ -16,9 +16,6 @@
                         {{ __('Mobil') }}
                     </x-nav-link>
                     @auth
-                    {{-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link> --}}
                     <x-nav-link :href="route('pemesanan.index')" :active="request()->routeIs('pemesanan*')">
                         {{ __('Penjualan') }}
                     </x-nav-link>
@@ -26,6 +23,9 @@
                     @role('sales')
                     <x-nav-link :href="route('penjualan.index')" :active="request()->routeIs('penjualan.*')">
                         {{ __('Laporan Penjualan') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('jurnal.index')" :active="request()->routeIs('jurnal.*')">
+                        {{ __('Jurnal') }}
                     </x-nav-link>
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
                         {{ __('Akun') }}

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('lap_penjualan', function (Blueprint $table) {
             $table->id();
             $table->json('array_penjualan');
-            $table->string('bulan');
+            $table->string('bulan', 10);
             $table->integer('tahun');
             $table->timestamps('');
         });

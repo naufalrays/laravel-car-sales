@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Pemesanan;
 use Illuminate\Http\Request;
 use App\Models\Car;
+use App\Models\Jurnal;
 use App\Models\Mobil;
 use App\Models\Penjualan;
+use App\Models\Retur;
 use App\Models\User;
 use DateTime;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -108,6 +110,16 @@ class PemesananController extends Controller
         return back();
     }
 
+    // Batalkan retur
+    public function batalkanRetur($id)
+    {
+        Retur::where('pemesanan_id', $id)->delete();
+        $data = Pemesanan::find($id);
+        $data["status"] = "Dibeli";
+        $data->save();
+        return back();
+    }
+
     public function informasi(Request $request)
     {
         $totalPrice = str_replace(".", "", $request->totalPrice);
@@ -131,12 +143,20 @@ class PemesananController extends Controller
         return view('pemesanan.adminConfirm', ['dataPemesanan' => $dataPemesanan]);
     }
 
+    public function konfirmasiRetur($id)
+    {
+        $dataPemesanan = Pemesanan::find($id);
+        $dataRetur = Retur::where('pemesanan_id', $id)->first();
+        return view('pemesanan.konfirmasiRetur', compact('dataPemesanan', 'dataRetur'));
+    }
+
     public function updateKonfirmasiPembayaran(Request $request, $id)
     {
         $confirm = $request->confirm;
         $date = new DateTime(now());
         $time = $date->format('Y-m-d');
         $data = Pemesanan::find($id);
+        $jurnalData = new Jurnal();
         $dataPenjualan = new Penjualan();
         $dataMobil = Mobil::find($data->mobil->id);
         if ($confirm === 'batal') {
@@ -144,13 +164,52 @@ class PemesananController extends Controller
             $data['alasan_gagal'] = $request->alasan_batal;
         } else {
             $data['status'] = 'Dibeli';
+            // Data Mobil
             $dataMobil['stok'] = $dataMobil->stok - $data->jumlah;
             $dataMobil->save();
-
+            // Data Penjualan
             $dataPenjualan['user_id'] = 1;
             $dataPenjualan['pemesanan_id'] = $id;
             $dataPenjualan['tanggal_lunas'] = $time;
             $dataPenjualan->save();
+            // Jurnal
+            $jurnalData['tanggal'] = $time;
+            $jurnalData['keterangan'] = "Penjualan $data->jumlah Mobil $dataMobil->merek $dataMobil->tipe";
+            $jurnalData['debit'] = "$data->harga_total";
+            $jurnalData->save();
+        }
+        $data->save();
+        return redirect('/pemesanan');
+    }
+
+    public function updateKonfirmasiRetur(Request $request, $id)
+    {
+        $confirm = $request->confirm;
+        $date = new DateTime(now());
+        $time = $date->format('Y-m-d');
+        $data = Pemesanan::find($id);
+        $jurnalData = new Jurnal();
+        $dataMobil = Mobil::find($data->mobil->id);
+        $dataRetur = Retur::where('pemesanan_id', $id)->first();
+        if ($confirm === 'batal') {
+            $data['status'] = 'Gagal Retur';
+            $data['alasan_gagal'] = $request->alasan_batal;
+            // Retur
+            $dataRetur["status"] = "Dibatalkan";
+            $dataRetur->save();
+        } else {
+            $data['status'] = 'Diretur';
+            // Data Mobil
+            $dataMobil['stok'] = $dataMobil->stok + $data->jumlah;
+            $dataMobil->save();
+            // Data Retur 
+            $dataRetur["status"] = "Diretur";
+            $dataRetur->save();
+            // Jurnal
+            $jurnalData['tanggal'] = $time;
+            $jurnalData['keterangan'] = "Retur $dataRetur->jumlah_retur Mobil $dataMobil->merek $dataMobil->tipe";
+            $jurnalData['kredit'] = $dataRetur->harga_total_retur;
+            $jurnalData->save();
         }
         $data->save();
         return redirect('/pemesanan');

@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Penjualan::class);
     }
+
+    public function retur()
+    {
+        return $this->hasMany(Retur::class);
+    }
 }
